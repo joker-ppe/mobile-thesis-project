@@ -53,13 +53,14 @@ dependencies {
     implementation 'com.google.android.material:material:1.10.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.core:core-ktx:1.12.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.9.20"
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
     // firebase
     // Import the Firebase BoM
-    implementation(platform('com.google.firebase:firebase-bom:32.4.1'))
+    implementation(platform('com.google.firebase:firebase-bom:32.7.0'))
 
     // When using the BoM, you don't specify versions in Firebase library dependencies
     // Add the dependency for the Firebase SDK for Google Analytics
@@ -75,9 +76,28 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
+    // coroutine
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3'
+
     // Hilt
-    implementation 'com.google.dagger:hilt-android:2.48.1'
-    kapt 'com.google.dagger:hilt-compiler:2.48.1'
+    implementation 'com.google.dagger:hilt-android:2.49'
+    kapt 'com.google.dagger:hilt-compiler:2.49'
+
+    // ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2"
+    // LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.2"
+    // Lifecycles
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.2"
+    // Saved state module for ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.2"
+
+    implementation 'com.google.android.gms:play-services-base:18.2.0'
+    implementation 'com.google.android.gms:play-services-tflite-java:16.1.0'
+    implementation 'com.google.android.gms:play-services-code-scanner:16.1.0'
+
+    implementation 'androidx.activity:activity-ktx:1.8.1'
 
     implementation 'com.intuit.sdp:sdp-android:1.1.0'
     implementation 'com.intuit.ssp:ssp-android:1.1.0'
