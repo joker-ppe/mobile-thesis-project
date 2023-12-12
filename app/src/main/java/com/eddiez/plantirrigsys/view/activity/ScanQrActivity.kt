@@ -1,25 +1,30 @@
 package com.eddiez.plantirrigsys.view.activity
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.viewModels
+import com.eddiez.plantirrigsys.base.BaseActivity
 import com.eddiez.plantirrigsys.databinding.ActivityScanQrBinding
+import com.eddiez.plantirrigsys.viewmodel.UserViewModel
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanning
+import dagger.hilt.android.AndroidEntryPoint
 
-class ScanQrActivity : AppCompatActivity() {
+@AndroidEntryPoint
+class ScanQrActivity : BaseActivity() {
 
     private lateinit var binding: ActivityScanQrBinding
+    private val viewModel: UserViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityScanQrBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         val options = GmsBarcodeScannerOptions.Builder()
             .setBarcodeFormats(
                 Barcode.FORMAT_QR_CODE,
-                Barcode.FORMAT_AZTEC)
+                Barcode.FORMAT_AZTEC
+            )
             .enableAutoZoom()
             .build()
 
@@ -40,6 +45,11 @@ class ScanQrActivity : AppCompatActivity() {
                 .addOnFailureListener { e ->
                     // Task failed with an exception
                 }
+        }
+
+
+        viewModel.accessToken.observe(this) {
+            binding.tvResult.text = it
         }
     }
 }

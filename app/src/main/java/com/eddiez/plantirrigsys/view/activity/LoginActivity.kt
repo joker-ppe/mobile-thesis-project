@@ -5,13 +5,13 @@ import android.content.Intent
 import android.content.IntentSender
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
+import android.view.View
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.eddiez.plantirrigsys.R
+import com.eddiez.plantirrigsys.base.BaseActivity
 import com.eddiez.plantirrigsys.databinding.ActivityLoginBinding
 import com.eddiez.plantirrigsys.datamodel.UserDataModel
 import com.eddiez.plantirrigsys.viewmodel.UserViewModel
@@ -20,10 +20,8 @@ import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity() {
 
     private val TAG: String = "LoginActivity"
     private lateinit var binding: ActivityLoginBinding
@@ -38,6 +36,7 @@ class LoginActivity : AppCompatActivity() {
 //        Log.d(TAG, result.resultCode.toString())
 
             if (result.resultCode != Activity.RESULT_CANCELED) {
+                binding.spinKit.visibility = View.VISIBLE
                 // There are no request codes
                 val data: Intent? = result.data
 
@@ -55,6 +54,8 @@ class LoginActivity : AppCompatActivity() {
                 } catch (e: Exception) {
                     e.message?.let { Log.e(e.cause.toString(), it) }
                 }
+            } else {
+                binding.spinKit.visibility = View.GONE
             }
         }
 
@@ -92,6 +93,8 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.spinKit.visibility = View.GONE
+
         auth = FirebaseAuth.getInstance()
 
         oneTapClient = Identity.getSignInClient(this)
@@ -122,18 +125,23 @@ class LoginActivity : AppCompatActivity() {
 
         viewModel.loginResponse.observe(this, Observer { response ->
             if (response != null) {
-                // Update UI with successful response data
-                Log.d(TAG, "Access Token: ${response.accessToken}")
+                Log.d(TAG, response.accessToken.toString())
+                // save access token
+                viewModel.saveData(response)
 
-                val intent = Intent(this, ScanQrActivity::class.java)
+                val intent = Intent(this, MainActivity::class.java).apply {
+                    // Optionally add extras to the intent
+                    // intent.putExtra("key", value)
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                }
                 startActivity(intent)
             }
         })
 
         viewModel.errorMessage.observe(this, Observer { error ->
             if (error.isNotEmpty()) {
-                Log.d(TAG, error.toString())
-                Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
+                Log.e(TAG, error.toString())
+//                Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
 
                 if (error == "Login: User not found") {
                     viewModel.userData.value?.let { viewModel.register(it) }
@@ -158,7 +166,7 @@ class LoginActivity : AppCompatActivity() {
         }.addOnFailureListener(this) { e ->
             // No saved credentials found. Launch the One Tap sign-up flow, or
             // do nothing and continue presenting the signed-out UI.
-            Log.d(TAG, e.localizedMessage)
+            e.localizedMessage?.let { Log.d(TAG, it) }
         }
     }
 }

@@ -1,4 +1,13 @@
 <resources>
     <string name="app_name">Smart Garden Care</string>
     <string name="web_client_id">920429838904-r39q0npj70pflp54hsmedpa72st93l9t.apps.googleusercontent.com</string>
+    <string name="text_label_home">Home</string>
+    <string name="text_label_schedule">Schedule</string>
+    <string name="text_label_profile">Profile</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="welcome_back">Welcome back,</string>
+    <string name="title_dialog_logout">Confirm Logout</string>
+    <string name="supporting_text_dialog_logout">Are you sure you want to log out? You will need to login to access your account again.</string>
+    <string name="my_schedule">My schedules</string>
 </resources>

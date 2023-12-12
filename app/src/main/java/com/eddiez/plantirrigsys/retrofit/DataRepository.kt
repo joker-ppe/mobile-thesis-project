@@ -7,4 +7,6 @@ import javax.inject.Inject
 class DataRepository @Inject constructor(private val apiService: ApiService) {
     suspend fun register(data: UserDataModel) = apiService.register(data)
     suspend fun login(data: LoginDataModel) = apiService.login(data)
+    suspend fun getProfile(accessToken: String) = apiService.getProfile("Bearer $accessToken")
+    suspend fun getSchedules(accessToken: String) = apiService.getSchedulesOfUser("Bearer $accessToken")
 }
