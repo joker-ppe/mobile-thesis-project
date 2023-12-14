@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.eddiez.plantirrigsys.base.BaseFragment
 import com.eddiez.plantirrigsys.databinding.FragmentScheduleBinding
 import com.eddiez.plantirrigsys.datamodel.ScheduleDataModel
+import com.eddiez.plantirrigsys.view.activity.CreateScheduleActivity
+import com.eddiez.plantirrigsys.view.activity.ExploreScheduleActivity
 import com.eddiez.plantirrigsys.view.activity.LoginActivity
 import com.eddiez.plantirrigsys.view.adapter.ScheduleItemAdapter
 import com.eddiez.plantirrigsys.viewmodel.ScheduleViewModel
@@ -42,6 +44,10 @@ class ScheduleFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.swipeRefreshLayout.isRefreshing = true
+        if (binding.fabMenu.isOpened) {
+            binding.fabMenu.close(false)
+        }
+        binding.fabMenu.visibility = View.GONE
 
         binding.rvSchedule.layoutManager = LinearLayoutManager(context)
 
@@ -69,8 +75,30 @@ class ScheduleFragment : BaseFragment() {
         }
 
         binding.swipeRefreshLayout.setOnRefreshListener {
+            if (binding.fabMenu.isOpened) {
+                binding.fabMenu.close(false)
+            }
+            binding.fabMenu.visibility = View.GONE
             // Logic to refresh the RecyclerView goes here
             refreshData()
+        }
+
+        binding.fabCreate.setOnClickListener {
+            val intent = Intent(requireContext(), CreateScheduleActivity::class.java)
+            startActivity(intent)
+
+            if (binding.fabMenu.isOpened) {
+                binding.fabMenu.close(false)
+            }
+        }
+
+        binding.fabExplore.setOnClickListener {
+            val intent = Intent(requireContext(), ExploreScheduleActivity::class.java)
+            startActivity(intent)
+
+            if (binding.fabMenu.isOpened) {
+                binding.fabMenu.close(false)
+            }
         }
     }
 
@@ -86,8 +114,22 @@ class ScheduleFragment : BaseFragment() {
     private fun setupRecyclerView(items: List<ScheduleDataModel>) {
         // When data is loaded, call this to hide the refresh indicator
         binding.swipeRefreshLayout.isRefreshing = false
+        binding.imgDefault.visibility = View.GONE
+
+        if (binding.fabMenu.isOpened) {
+            binding.fabMenu.close(false)
+        }
+        binding.fabMenu.visibility = View.VISIBLE
 
         binding.rvSchedule.adapter = ScheduleItemAdapter(items)
+
+        if (items.isEmpty()) {
+            binding.bgEmpty.visibility = View.VISIBLE
+            binding.mySchedule.visibility = View.INVISIBLE
+        } else {
+            binding.bgEmpty.visibility = View.GONE
+            binding.mySchedule.visibility = View.VISIBLE
+        }
     }
 
     companion object {

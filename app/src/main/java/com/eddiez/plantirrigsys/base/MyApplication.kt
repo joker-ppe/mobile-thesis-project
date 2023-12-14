@@ -12,9 +12,9 @@ class MyApplication : Application() {
 
         Fonty
             .context(this)
-            .normalTypeface("kollektif.ttf")
-            .italicTypeface("kollektif_italic.ttf")
-            .boldTypeface("kollektif_bold.ttf")
+            .normalTypeface("rubik.ttf")
+            .italicTypeface("rubik_italic.ttf")
+            .boldTypeface("rubik_bold.ttf")
             .build()
     }
 }

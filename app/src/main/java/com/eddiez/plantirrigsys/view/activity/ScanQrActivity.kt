@@ -10,7 +10,6 @@ import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanning
 import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class ScanQrActivity : BaseActivity() {
 
     private lateinit var binding: ActivityScanQrBinding

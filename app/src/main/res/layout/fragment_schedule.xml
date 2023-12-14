@@ -20,6 +20,7 @@
 
             android:text="@string/my_schedule"
             android:textSize="26sp"
+            android:visibility="gone"
             android:layout_marginStart="@dimen/_5sdp"
 
             app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +41,97 @@
                 android:layout_marginTop="@dimen/_10sdp" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+        <LinearLayout
+            android:id="@+id/bgEmpty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            >
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="@string/create_or_explore_na_schedule"
+                android:textSize="@dimen/_30ssp"
+                android:gravity="center"
+                android:textColor="?android:colorPrimary"
+                />
+
+            <ImageView
+                android:id="@+id/imgArrow"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_250sdp"
+                android:visibility="visible"
+                android:src="@drawable/arrow"
+                android:layout_gravity="end"
+                android:scaleType="fitXY"
+                android:padding="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_marginStart="@dimen/_100sdp"
+                android:layout_marginBottom="@dimen/_70sdp"
+
+
+
+                app:layout_constraintTop_toBottomOf="@id/mySchedule"
+                app:layout_constraintBottom_toBottomOf="@id/fab_menu"
+                />
+        </LinearLayout>
+
+        <com.github.clans.fab.FloatingActionMenu
+            android:id="@+id/fab_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:menu_labels_position="left"
+            app:menu_animationDelayPerItem="55"
+            app:menu_colorNormal="#6750A4"
+            app:menu_colorPressed="?android:colorPrimary"
+            app:menu_colorRipple="?android:colorPrimary"
+            android:layout_marginBottom="@dimen/_20sdp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            >
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/fabCreate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_label="Create"
+                app:fab_size="normal"
+                android:src="@drawable/ic_create"
+                app:fab_colorNormal="?android:colorAccent"
+                app:fab_colorPressed="?android:colorAccent"
+                app:fab_colorRipple="#99FFFFFF"
+               />
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/fabExplore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_label="Explore"
+                app:fab_size="normal"
+                app:fab_colorNormal="?android:colorAccent"
+                app:fab_colorPressed="?android:colorAccent"
+                app:fab_colorRipple="#99FFFFFF"
+                android:src="@drawable/ic_explore" />
+        </com.github.clans.fab.FloatingActionMenu>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <ImageView
+        android:id="@+id/imgDefault"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="@dimen/_150sdp"
+
+        android:src="@mipmap/ic_launcher"
+        android:layout_gravity="center"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 </FrameLayout>

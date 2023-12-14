@@ -3,7 +3,11 @@ package com.eddiez.plantirrigsys.view.viewholder
 import android.annotation.SuppressLint
 import android.icu.text.SimpleDateFormat
 import android.icu.util.TimeZone
+import android.util.Base64
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.eddiez.plantirrigsys.R
 import com.eddiez.plantirrigsys.databinding.LayoutScheduleItemBinding
 import com.eddiez.plantirrigsys.datamodel.ScheduleDataModel
 import java.util.Locale
@@ -29,6 +33,19 @@ class ScheduleItemViewHolder(private val binding: LayoutScheduleItemBinding) :
             val dateTime = convertAndFormatDate(updatedTime)
 
             binding.tvUpdateAt.text = dateTime
+        }
+
+        val imageBytes = item.imageData
+        if (!imageBytes.isNullOrEmpty()) {
+            val imageByteArray: ByteArray = Base64.decode(imageBytes, Base64.DEFAULT)
+
+            Glide.with(binding.root)
+                .asBitmap()
+                .load(imageByteArray)
+                .placeholder(R.drawable.image_default)
+                .error(R.drawable.image_default)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(binding.imgSchedule)
         }
     }
 

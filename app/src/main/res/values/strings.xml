@@ -10,4 +10,6 @@
     <string name="title_dialog_logout">Confirm Logout</string>
     <string name="supporting_text_dialog_logout">Are you sure you want to log out? You will need to login to access your account again.</string>
     <string name="my_schedule">My schedules</string>
+    <string name="create_or_explore_na_schedule">Create or Explore\na schedule</string>
+    <string name="public_for_everyone">Public for everyone</string>
 </resources>
