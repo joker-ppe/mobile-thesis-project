@@ -12,4 +12,7 @@
     <string name="my_schedule">My schedules</string>
     <string name="create_or_explore_na_schedule">Create or Explore\na schedule</string>
     <string name="public_for_everyone">Public for everyone</string>
+    <string name="schedule_name">Schedule Name</string>
+    <string name="schedule_description">Schedule Description</string>
+    <string name="image_of_agricultural_crops">Image of agricultural crops</string>
 </resources>
