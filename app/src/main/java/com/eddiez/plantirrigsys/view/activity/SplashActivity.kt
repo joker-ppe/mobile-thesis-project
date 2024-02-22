@@ -5,14 +5,12 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import androidx.activity.viewModels
 import com.eddiez.plantirrigsys.base.BaseActivity
 import com.eddiez.plantirrigsys.databinding.ActivitySplashBinding
-import com.eddiez.plantirrigsys.viewmodel.UserViewModel
 
 class SplashActivity : BaseActivity() {
     private lateinit var binding: ActivitySplashBinding
-    private val viewModel: UserViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
@@ -20,7 +18,7 @@ class SplashActivity : BaseActivity() {
 
         var intent: Intent
 
-        viewModel.accessToken.observe(this) {
+        userViewModel.accessToken.observe(this) {
             if (it.isNotEmpty()) {
                 Log.d("access_token", it)
                 intent = Intent(this@SplashActivity, MainActivity::class.java).apply {

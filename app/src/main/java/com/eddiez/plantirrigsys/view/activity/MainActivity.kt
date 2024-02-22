@@ -56,7 +56,7 @@ class MainActivity : BaseActivity() {
         // Set default fragment at startup
         if (savedInstanceState == null) {
             binding.bottomNavigationView.selectedItemId =
-                R.id.itemSchedule // Replace with default fragment's associated ID
+                R.id.itemHome // Replace with default fragment's associated ID
         }
     }
 

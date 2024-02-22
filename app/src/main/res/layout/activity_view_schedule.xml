@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".view.activity.ViewScheduleActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            app:navigationIcon="@drawable/baseline_close_24"
+            app:menu="@menu/top_app_bar"
+            app:title="View Schedule" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp">
+
+            <TextView
+                android:id="@+id/tvOwnerTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Owner: "
+                android:textColor="@color/black"
+                android:textSize="@dimen/_13ssp"
+                android:textStyle="italic"
+
+                app:layout_constraintEnd_toStartOf="@id/tvOwner"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvOwner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_13ssp"
+                android:textStyle="bold"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/bgImgData"
+                style="@style/Widget.MaterialComponents.CardView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/_5sdp"
+                app:cardBackgroundColor="@color/white"
+                app:layout_constraintDimensionRatio="16:9"
+                android:visibility="visible"
+
+                app:layout_constraintTop_toBottomOf="@id/tvOwner">
+
+                <ImageView
+                    android:id="@+id/imgData"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:focusable="true"
+
+                    android:scaleType="fitXY"
+                    android:src="@drawable/image_default" />
+                <!-- Card contents. -->
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <TextView
+                android:id="@+id/tvDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:lines="3"
+                android:text="Description"
+
+                app:layout_constraintTop_toBottomOf="@id/bgImgData" />
+
+            <TextView
+                android:id="@+id/tvScheduleTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text="Watering time: "
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvDescription" />
+
+            <TextView
+                android:id="@+id/tvScheduleDays"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="30"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+
+                app:layout_constraintStart_toEndOf="@id/tvScheduleTime"
+                app:layout_constraintTop_toTopOf="@id/tvScheduleTime" />
+
+            <TextView
+                android:id="@+id/tvScheduleDaysUnit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" days"
+
+                app:layout_constraintStart_toEndOf="@id/tvScheduleDays"
+                app:layout_constraintTop_toTopOf="@id/tvScheduleTime" />
+
+            <TextView
+                android:id="@+id/tvSlots"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text="Daily watering schedule: "
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvScheduleTime" />
+
+            <TextView
+                android:id="@+id/tvSlotsNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+
+                app:layout_constraintStart_toEndOf="@id/tvSlots"
+                app:layout_constraintTop_toTopOf="@id/tvSlots" />
+
+            <TextView
+                android:id="@+id/tvSlotsUnit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" slots"
+
+                app:layout_constraintStart_toEndOf="@id/tvSlotsNumber"
+                app:layout_constraintTop_toTopOf="@id/tvSlots" />
+
+            <LinearLayout
+                android:id="@+id/bgSlots"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@+id/tvSlots">
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvStopCondition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="Exceptional irrigation schedule termination condition"
+                android:textStyle="bold"
+
+                app:layout_constraintTop_toBottomOf="@+id/bgSlots" />
+
+            <TextView
+                android:id="@+id/tvTemperatureThreshold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text="Soil temperature threshold: "
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvStopCondition" />
+
+            <TextView
+                android:id="@+id/tvTemperatureThresholdValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="None"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+
+                app:layout_constraintStart_toEndOf="@id/tvTemperatureThreshold"
+                app:layout_constraintTop_toTopOf="@id/tvTemperatureThreshold" />
+
+            <TextView
+                android:id="@+id/tvMoistureThreshold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text="Soil moisture threshold: "
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTemperatureThreshold" />
+
+            <TextView
+                android:id="@+id/tvMoistureThresholdValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="None"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+
+                app:layout_constraintStart_toEndOf="@id/tvMoistureThreshold"
+                app:layout_constraintTop_toTopOf="@id/tvMoistureThreshold" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,4 +1,6 @@
-package com.eddiez.plantirrigsys.datamodel
+package com.eddiez.plantirrigsys.dataModel
+
+import java.io.Serializable
 
 data class UserDataModel (
     val id: Int? = null,
@@ -11,7 +13,5 @@ data class UserDataModel (
     val address: String? = null,
     val city: String? = null,
     val country: String? = null,
-    val longitude: Float? = null,
-    val latitude: Float? = null,
     val photoUrl: String? = null,
-)
+): Serializable

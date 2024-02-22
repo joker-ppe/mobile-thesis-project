@@ -5,6 +5,7 @@ plugins {
     id 'com.google.gms.google-services'
     id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 android {
@@ -13,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId "com.eddiez.plantirrigsys"
-        minSdk 25
+        minSdk 26
         targetSdk 34
         versionCode 1
         versionName "1.0.0"
@@ -50,17 +51,17 @@ android {
 dependencies {
     implementation 'androidx.core:core-ktx:1.12.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.10.0'
+    implementation 'com.google.android.material:material:1.11.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.core:core-ktx:1.12.0'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.9.20"
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.9.22'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
     // firebase
     // Import the Firebase BoM
-    implementation(platform('com.google.firebase:firebase-bom:32.7.0'))
+    implementation(platform('com.google.firebase:firebase-bom:32.7.2'))
 
     // When using the BoM, you don't specify versions in Firebase library dependencies
     // Add the dependency for the Firebase SDK for Google Analytics
@@ -68,41 +69,43 @@ dependencies {
     // Add the dependency for the Firebase Authentication library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-storage")
 
     // Also add the dependency for the Google Play services library and specify its version
-    implementation('com.google.android.gms:play-services-auth:20.7.0')
+    implementation('com.google.android.gms:play-services-auth:21.0.0')
 
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     // coroutine
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0'
 
     // Hilt
-    implementation 'com.google.dagger:hilt-android:2.49'
-    kapt 'com.google.dagger:hilt-compiler:2.49'
+    implementation 'com.google.dagger:hilt-android:2.50'
+    kapt 'com.google.dagger:hilt-compiler:2.50'
 
     // ViewModel
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2"
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0'
     // LiveData
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.2"
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.7.0'
     // Lifecycles
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.2"
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.7.0'
     // Saved state module for ViewModel
-    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.2"
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0'
     // datastore
     implementation "androidx.datastore:datastore-preferences:1.0.0"
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
-    implementation 'com.google.android.gms:play-services-base:18.2.0'
+    implementation 'com.google.android.gms:play-services-base:18.3.0'
     implementation 'com.google.android.gms:play-services-tflite-java:16.1.0'
     implementation 'com.google.android.gms:play-services-code-scanner:16.1.0'
 
-    implementation 'androidx.activity:activity-ktx:1.8.1'
+    implementation 'androidx.activity:activity-ktx:1.8.2'
     implementation "androidx.fragment:fragment-ktx:1.6.2"
+    implementation 'io.reactivex.rxjava3:rxjava:3.1.8'
 
     implementation 'com.intuit.sdp:sdp-android:1.1.0'
     implementation 'com.intuit.ssp:ssp-android:1.1.0'
@@ -117,4 +120,14 @@ dependencies {
     kapt 'com.github.bumptech.glide:compiler:4.16.0'
 
     implementation 'com.github.clans:fab:1.6.4'
+
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    // Maps SDK for Android
+    implementation 'com.google.android.gms:play-services-maps:18.2.0'
+    implementation 'com.google.android.gms:play-services-location:21.1.0'
+    implementation 'com.google.android.libraries.places:places:3.3.0'
+
+    // rabbitmq
+    implementation 'com.rabbitmq:amqp-client:5.20.0'
 }

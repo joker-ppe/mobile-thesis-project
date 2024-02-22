@@ -6,16 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.eddiez.plantirrigsys.base.BaseFragment
+import com.eddiez.plantirrigsys.dataModel.ScheduleDataModel
 import com.eddiez.plantirrigsys.databinding.FragmentScheduleBinding
-import com.eddiez.plantirrigsys.datamodel.ScheduleDataModel
+import com.eddiez.plantirrigsys.utilities.AppConstants
 import com.eddiez.plantirrigsys.view.activity.CreateScheduleActivity
 import com.eddiez.plantirrigsys.view.activity.ExploreScheduleActivity
-import com.eddiez.plantirrigsys.view.activity.LoginActivity
 import com.eddiez.plantirrigsys.view.adapter.ScheduleItemAdapter
-import com.eddiez.plantirrigsys.viewmodel.ScheduleViewModel
 
 
 /**
@@ -26,7 +24,8 @@ import com.eddiez.plantirrigsys.viewmodel.ScheduleViewModel
 class ScheduleFragment : BaseFragment() {
 
     private lateinit var binding: FragmentScheduleBinding
-    private val viewModel: ScheduleViewModel by viewModels()
+    private var listSchedule = listOf<ScheduleDataModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -51,27 +50,45 @@ class ScheduleFragment : BaseFragment() {
 
         binding.rvSchedule.layoutManager = LinearLayoutManager(context)
 
-        viewModel.accessToken.observe(viewLifecycleOwner) { token ->
-            if (token.isNotEmpty()) {
-                viewModel.getSchedules(accessToken = token)
-            }
-        }
+        lifecycle.addObserver(scheduleViewModel)
 
-        viewModel.schedules.observe(viewLifecycleOwner) {
+        scheduleViewModel.currentSchedule.observe(viewLifecycleOwner) {
             if (it != null) {
-                setupRecyclerView(it)
-            }
-        }
-
-        viewModel.accessTokenExpired.observe(viewLifecycleOwner) {
-            if (it) {
-                val intent = Intent(requireContext(), LoginActivity::class.java).apply {
-                    // Optionally add extras to the intent
-                    // intent.putExtra("key", value)
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                }
+                val intent = Intent(requireContext(), CreateScheduleActivity::class.java)
+                intent.putExtra(AppConstants.SCHEDULE, it)
                 startActivity(intent)
             }
+        }
+
+        userViewModel.accessToken.observe(viewLifecycleOwner) { token ->
+            if (token.isNotEmpty()) {
+                scheduleViewModel.getSchedules(accessToken = token)
+            } else {
+
+            }
+        }
+
+        scheduleViewModel.schedules.observe(viewLifecycleOwner) {
+            if (it != null) {
+                // check current list
+                if (listSchedule.isNotEmpty() && it.isNotEmpty()) {
+                    if (listSchedule[0].updateContentAt != it[0].updateContentAt) {
+                        listSchedule = it
+
+                        setupRecyclerView(listSchedule)
+                    }
+                } else {
+                    listSchedule = it
+
+                    setupRecyclerView(listSchedule)
+                }
+            }
+            binding.swipeRefreshLayout.isRefreshing = false
+
+            if (binding.fabMenu.isOpened) {
+                binding.fabMenu.close(false)
+            }
+            binding.fabMenu.visibility = View.VISIBLE
         }
 
         binding.swipeRefreshLayout.setOnRefreshListener {
@@ -104,24 +121,18 @@ class ScheduleFragment : BaseFragment() {
 
     private fun refreshData() {
         // Refresh data in your RecyclerView
-        viewModel.accessToken.value?.let { token ->
+        userViewModel.accessToken.value?.let { token ->
             if (token.isNotEmpty()) {
-                viewModel.getSchedules(token)
+                scheduleViewModel.getSchedules(token)
             }
         }
     }
 
     private fun setupRecyclerView(items: List<ScheduleDataModel>) {
         // When data is loaded, call this to hide the refresh indicator
-        binding.swipeRefreshLayout.isRefreshing = false
         binding.imgDefault.visibility = View.GONE
 
-        if (binding.fabMenu.isOpened) {
-            binding.fabMenu.close(false)
-        }
-        binding.fabMenu.visibility = View.VISIBLE
-
-        binding.rvSchedule.adapter = ScheduleItemAdapter(items)
+        binding.rvSchedule.adapter = ScheduleItemAdapter(items, scheduleViewModel)
 
         if (items.isEmpty()) {
             binding.bgEmpty.visibility = View.VISIBLE
@@ -130,6 +141,22 @@ class ScheduleFragment : BaseFragment() {
             binding.bgEmpty.visibility = View.GONE
             binding.mySchedule.visibility = View.VISIBLE
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // Logic to refresh the RecyclerView goes here
+        refreshData()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        // Remove the observer when the view is destroyed
+        lifecycle.removeObserver(scheduleViewModel)
+
+        scheduleViewModel.newSchedule.removeObservers(viewLifecycleOwner)
     }
 
     companion object {

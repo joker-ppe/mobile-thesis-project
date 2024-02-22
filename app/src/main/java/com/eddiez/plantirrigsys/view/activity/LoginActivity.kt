@@ -8,13 +8,11 @@ import android.util.Log
 import android.view.View
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.eddiez.plantirrigsys.R
 import com.eddiez.plantirrigsys.base.BaseActivity
 import com.eddiez.plantirrigsys.databinding.ActivityLoginBinding
-import com.eddiez.plantirrigsys.datamodel.UserDataModel
-import com.eddiez.plantirrigsys.viewmodel.UserViewModel
+import com.eddiez.plantirrigsys.dataModel.UserDataModel
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
@@ -28,7 +26,6 @@ class LoginActivity : BaseActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var oneTapClient: SignInClient
     private lateinit var signInRequest: BeginSignInRequest
-    private val viewModel: UserViewModel by viewModels()
 
     private val resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
@@ -78,10 +75,10 @@ class LoginActivity : BaseActivity() {
                         photoUrl = user.photoUrl.toString()
                     )
 
-                    viewModel.userData.postValue(userData)
+                    userViewModel.userData.postValue(userData)
 
 //                    viewModel.register(userData)
-                    viewModel.login(userData)
+                    userViewModel.login(userData)
                 }
 
             }
@@ -114,20 +111,20 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun setupObservers() {
-        viewModel.registrationResponse.observe(this, Observer { response ->
+        userViewModel.registrationResponse.observe(this, Observer { response ->
             if (response != null) {
                 // Update UI with successful response data
                 Log.d(TAG, response.toString())
 
-                viewModel.userData.value?.let { viewModel.login(it) }
+                userViewModel.userData.value?.let { userViewModel.login(it) }
             }
         })
 
-        viewModel.loginResponse.observe(this, Observer { response ->
+        userViewModel.loginResponse.observe(this, Observer { response ->
             if (response != null) {
                 Log.d(TAG, response.accessToken.toString())
                 // save access token
-                viewModel.saveData(response)
+                userViewModel.saveData(response)
 
                 val intent = Intent(this, MainActivity::class.java).apply {
                     // Optionally add extras to the intent
@@ -138,13 +135,13 @@ class LoginActivity : BaseActivity() {
             }
         })
 
-        viewModel.errorMessage.observe(this, Observer { error ->
+        userViewModel.errorMessage.observe(this, Observer { error ->
             if (error.isNotEmpty()) {
                 Log.e(TAG, error.toString())
 //                Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
 
                 if (error == "Login: User not found") {
-                    viewModel.userData.value?.let { viewModel.register(it) }
+                    userViewModel.userData.value?.let { userViewModel.register(it) }
                 }
             }
         })

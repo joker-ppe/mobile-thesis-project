@@ -1,4 +1,4 @@
-package com.eddiez.plantirrigsys.datamodel
+package com.eddiez.plantirrigsys.dataModel
 
 data class LoginDataModel(
     val accessToken: String? = null,

@@ -6,12 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import com.eddiez.plantirrigsys.R
 import com.eddiez.plantirrigsys.base.BaseFragment
 import com.eddiez.plantirrigsys.databinding.FragmentProfileBinding
 import com.eddiez.plantirrigsys.view.activity.LoginActivity
-import com.eddiez.plantirrigsys.viewmodel.UserViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 /**
@@ -22,7 +20,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 class ProfileFragment : BaseFragment() {
 
     private lateinit var binding: FragmentProfileBinding
-    private val viewModel: UserViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -49,7 +46,7 @@ class ProfileFragment : BaseFragment() {
                     }
                     .setPositiveButton(resources.getString(android.R.string.ok)) { dialog, which ->
                         // Respond to positive button press
-                        viewModel.clearDataLocal {
+                        userViewModel.clearDataLocal {
                             val intent = Intent(requireContext(), LoginActivity::class.java).apply {
                                 // Optionally add extras to the intent
                                 // intent.putExtra("key", value)

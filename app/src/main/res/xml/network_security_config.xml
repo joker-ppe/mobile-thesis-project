@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">192.168.1.225</domain>
-        <domain includeSubdomains="true">api.mhzppe.com</domain>
+        <domain includeSubdomains="true">192.168.68.51</domain>
+        <domain includeSubdomains="true">54.169.246.109</domain>
     </domain-config>
 </network-security-config>

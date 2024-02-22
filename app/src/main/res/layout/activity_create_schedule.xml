@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,126 +7,177 @@
     android:background="@android:color/white"
     tools:context=".view.activity.CreateScheduleActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            app:title="Create Schedule"
+            app:navigationIcon="@drawable/baseline_close_24" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/_20sdp">
-
-        <TextView
-            android:id="@+id/tvTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Create schedule"
-            android:textStyle="bold"
-            android:textSize="@dimen/_18ssp"
-            android:layout_marginTop="@dimen/_10sdp"
-
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/filledTextFieldTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/schedule_name"
-            android:layout_marginTop="@dimen/_20sdp"
-            app:layout_constraintTop_toBottomOf="@id/tvTitle">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:maxLines="1" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/filledTextFieldDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/schedule_description"
-            app:layout_constraintTop_toBottomOf="@id/filledTextFieldTitle">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="top|start"
-                android:inputType="textMultiLine"
-                android:maxLines="3"
-                android:minLines="3" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <CheckBox
-            android:id="@+id/cbPublic"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="@string/public_for_everyone"
-            app:layout_constraintTop_toBottomOf="@id/filledTextFieldDescription" />
-
-        <TextView
-            android:id="@+id/tvImageDesc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/image_of_agricultural_crops"
-            android:textStyle="bold"
-
-            app:layout_constraintTop_toBottomOf="@id/cbPublic" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/bgImgData"
-            style="@style/Widget.MaterialComponents.CardView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="@dimen/_5sdp"
-            app:cardBackgroundColor="@color/white"
-            app:layout_constraintDimensionRatio="16:9"
-
-            app:layout_constraintTop_toBottomOf="@id/tvImageDesc">
-
-            <ImageView
-                android:id="@+id/imgData"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clickable="true"
-                android:focusable="true"
-
-                android:scaleType="fitXY"
-                android:src="@drawable/image_default" />
-            <!-- Card contents. -->
-
-        </com.google.android.material.card.MaterialCardView>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_height="match_parent"
+            android:padding="@dimen/_20sdp">
 
-            app:layout_constraintTop_toBottomOf="@id/bgImgData">
+            <com.github.ybq.android.spinkit.SpinKitView
+                android:id="@+id/spin_kit"
+                style="@style/SpinKitView.Circle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:SpinKit_Color="?android:colorPrimary"
+                android:layout_marginBottom="@dimen/_30sdp"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="gone" />
+
+            <!--            <TextView-->
+            <!--                android:id="@+id/tvTitle"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:text="Create schedule"-->
+            <!--                android:textStyle="bold"-->
+            <!--                android:textSize="@dimen/_18ssp"-->
+            <!--                android:layout_marginTop="@dimen/_10sdp"-->
+
+            <!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/filledTextFieldTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/schedule_name"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/filledTextFieldDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/schedule_description"
+                app:layout_constraintTop_toBottomOf="@id/filledTextFieldTitle">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top|start"
+                    android:inputType="textMultiLine"
+                    android:maxLines="3"
+                    android:minLines="3" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <CheckBox
+                android:id="@+id/cbPublic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="@string/public_for_everyone"
+                app:layout_constraintTop_toBottomOf="@id/filledTextFieldDescription" />
+
+            <LinearLayout
+                android:id="@+id/bgLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/cbPublic">
+
+                <TextView
+                    android:id="@+id/tvLatitude"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Latitude: "
+                    android:textStyle="normal"
+
+                    />
+
+                <TextView
+                    android:id="@+id/tvLatitudeValue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="13.444"
+                    android:textStyle="normal"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tvLongitude"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Longitude: "
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:id="@+id/tvLongitudeValue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="10.43"
+                    android:textStyle="normal"
+                    android:layout_weight="1" />
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/tvStopCondition"
+                android:id="@+id/tvImageDesc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Exceptional irrigation schedule termination condition"
+                android:text="@string/image_of_agricultural_crops"
                 android:textStyle="bold"
+                android:layout_marginTop="@dimen/_10sdp"
 
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/bgLocation" />
 
-            <CheckBox
-                android:id="@+id/cbTemperatureThreshold"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/bgImgData"
+                style="@style/Widget.MaterialComponents.CardView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:text="Soil temperature threshold"
-                app:layout_constraintTop_toBottomOf="@id/tvStopCondition" />
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/_5sdp"
+                app:cardBackgroundColor="@color/white"
+                app:layout_constraintDimensionRatio="16:9"
+                android:visibility="visible"
+
+                app:layout_constraintTop_toBottomOf="@id/tvImageDesc">
+
+                <ImageView
+                    android:id="@+id/imgData"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:focusable="true"
+
+                    android:scaleType="fitXY"
+                    android:src="@drawable/image_default" />
+                <!-- Card contents. -->
+
+            </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ftfTemperatureThreshold"
+                android:id="@+id/filledTextFieldNumberDays"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Soil temperature threshold (°C)"
-                app:layout_constraintTop_toBottomOf="@id/cbTemperatureThreshold">
+                android:hint="@string/schedule_time_in_days"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:layout_constraintTop_toBottomOf="@id/bgImgData">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -136,20 +187,13 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <CheckBox
-                android:id="@+id/cbMoistureThreshold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:text="Soil moisture threshold"
-                app:layout_constraintTop_toBottomOf="@id/ftfTemperatureThreshold" />
-
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ftfMoistureThreshold"
+                android:id="@+id/filledTextFieldNumberSlots"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Soil moisture threshold (%)"
-                app:layout_constraintTop_toBottomOf="@id/cbMoistureThreshold">
+                android:hint="@string/number_of_irrigation_slots"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:layout_constraintTop_toBottomOf="@id/filledTextFieldNumberDays">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -159,7 +203,112 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <LinearLayout
+                android:id="@+id/bgSlots"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@+id/filledTextFieldNumberSlots">
+
+
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/bgException"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+
+                app:layout_constraintTop_toBottomOf="@id/bgSlots">
+
+                <TextView
+                    android:id="@+id/tvStopCondition"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Exceptional irrigation schedule termination condition"
+                    android:textStyle="bold"
+
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <CheckBox
+                    android:id="@+id/cbTemperatureThreshold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="Soil temperature threshold"
+                    app:layout_constraintTop_toBottomOf="@id/tvStopCondition" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/ftfTemperatureThreshold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Soil temperature threshold (°C)"
+                    app:layout_constraintTop_toBottomOf="@id/cbTemperatureThreshold">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <CheckBox
+                    android:id="@+id/cbMoistureThreshold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="Soil moisture threshold"
+                    app:layout_constraintTop_toBottomOf="@id/ftfTemperatureThreshold" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/ftfMoistureThreshold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Soil moisture threshold (%)"
+                    app:layout_constraintTop_toBottomOf="@id/cbMoistureThreshold">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:maxLines="1" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/tvDelete"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Delete schedule"
+                android:gravity="center"
+                android:textColor="@android:color/holo_red_dark"
+                android:textStyle="bold"
+                android:padding="@dimen/_10sdp"
+                android:textSize="@dimen/_15ssp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="?selectableItemBackground"
+                android:foreground="?selectableItemBackground"
+
+                app:layout_constraintTop_toBottomOf="@id/bgException" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+
+                android:text="Save"
+                android:textStyle="bold"
+                android:textSize="@dimen/_14ssp"
+                android:textAllCaps="true"
+                android:padding="@dimen/_5sdp"
+
+                app:layout_constraintTop_toBottomOf="@id/tvDelete" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

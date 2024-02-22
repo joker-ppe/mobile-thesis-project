@@ -1,4 +1,4 @@
-package com.eddiez.plantirrigsys.viewmodel
+package com.eddiez.plantirrigsys.viewModel
 
 import android.util.Log
 import androidx.lifecycle.MediatorLiveData
@@ -6,11 +6,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.eddiez.plantirrigsys.datamodel.LoginDataModel
-import com.eddiez.plantirrigsys.datamodel.UserDataModel
+import com.eddiez.plantirrigsys.dataModel.LoginDataModel
+import com.eddiez.plantirrigsys.dataModel.UserDataModel
 import com.eddiez.plantirrigsys.retrofit.DataRepository
 import com.eddiez.plantirrigsys.utilities.AppConstants
 import com.eddiez.plantirrigsys.utilities.DataStoreHelper
+import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,29 +22,29 @@ class UserViewModel @Inject constructor(
     private val dataStoreHelper: DataStoreHelper
 ) : ViewModel() {
 
+    val gson = Gson()
+
     val userData = MutableLiveData<UserDataModel?>()
     val registrationResponse = MutableLiveData<UserDataModel>()
     val loginResponse = MutableLiveData<LoginDataModel>()
     val errorMessage = MutableLiveData<String>()
     val accessTokenExpired = MutableLiveData<Boolean>()
 
+    val encryptedData = MutableLiveData<String?>()
+    val decryptedData = MutableLiveData<String?>()
+
     val accessToken = dataStoreHelper.readData(AppConstants.ACCESS_TOKEN, "").asLiveData()
-    val userName = dataStoreHelper.readData(AppConstants.USER_NAME, "").asLiveData()
-    private val firstName = dataStoreHelper.readData(AppConstants.FIRST_NAME, "").asLiveData()
-    private val lastName = dataStoreHelper.readData(AppConstants.LAST_NAME, "").asLiveData()
-    val photoUrl = dataStoreHelper.readData(AppConstants.PHOTO_URL, "").asLiveData()
+    val userDataJson = dataStoreHelper.readData(AppConstants.USER_DATA, "").asLiveData()
 
     val fullName = MediatorLiveData<String>().apply {
-        addSource(firstName) { first ->
-            value = combineNames(first, lastName.value)
-        }
-        addSource(lastName) { last ->
-            value = combineNames(firstName.value, last)
+        addSource(userDataJson) { userJson ->
+            value = combineNames(userJson)
         }
     }
 
-    private fun combineNames(first: String?, last: String?): String {
-        return "${first.orEmpty()} ${last.orEmpty()}".trim()
+    private fun combineNames(userJson: String?): String {
+        val user = gson.fromJson(userJson, UserDataModel::class.java)
+        return "${user.firstName.orEmpty()} ${user.lastName.orEmpty()}".trim()
     }
 
     fun register(data: UserDataModel) = viewModelScope.launch {
@@ -118,10 +119,11 @@ class UserViewModel @Inject constructor(
         viewModelScope.launch {
             if (data != null) {
                 dataStoreHelper.saveData(AppConstants.ACCESS_TOKEN, data.accessToken)
-                dataStoreHelper.saveData(AppConstants.USER_NAME, data.userName)
-                dataStoreHelper.saveData(AppConstants.FIRST_NAME, data.firstName)
-                dataStoreHelper.saveData(AppConstants.LAST_NAME, data.lastName)
-                dataStoreHelper.saveData(AppConstants.PHOTO_URL, data.photoUrl)
+
+                val gson = Gson()
+                val dataJson = gson.toJson(data)
+
+                dataStoreHelper.saveData(AppConstants.USER_DATA, dataJson)
             }
         }
     }
@@ -130,6 +132,50 @@ class UserViewModel @Inject constructor(
         viewModelScope.launch {
             dataStoreHelper.clearData()
             onComplete() // Called after clearData() completes
+        }
+    }
+
+    fun encryptData(accessToken: String, textData: String) = viewModelScope.launch {
+        try {
+            val response = dataRepository.encrypt(accessToken, textData)
+            if (response.isSuccessful && response.body() != null) {
+                // Handle successful response
+                Log.d("Encrypted Data", response.body().toString())
+                encryptedData.postValue(response.body()!!.encryptedData)
+            } else {
+                // Handle API error response
+                errorMessage.postValue(
+                    "Error: ${response.code()} - ${
+                        response.errorBody()?.string()
+                    }"
+                )
+            }
+        } catch (e: Exception) {
+            // Handle other exceptions like network errors, etc.
+            // Post other exceptions like network errors
+            errorMessage.postValue(e.message ?: "An unknown error occurred")
+        }
+    }
+
+    fun decryptData(accessToken: String, encryptedData: String) = viewModelScope.launch {
+        try {
+            val response = dataRepository.decrypt(accessToken, encryptedData)
+            if (response.isSuccessful && response.body() != null) {
+                // Handle successful response
+                Log.d("Decrypted Data", response.body().toString())
+                decryptedData.postValue(response.body()!!.decryptedData)
+            } else {
+                // Handle API error response
+                errorMessage.postValue(
+                    "Error: ${response.code()} - ${
+                        response.errorBody()?.string()
+                    }"
+                )
+            }
+        } catch (e: Exception) {
+            // Handle other exceptions like network errors, etc.
+            // Post other exceptions like network errors
+            errorMessage.postValue(e.message ?: "An unknown error occurred")
         }
     }
 }

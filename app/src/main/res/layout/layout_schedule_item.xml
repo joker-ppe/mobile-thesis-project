@@ -57,6 +57,51 @@
 
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/viewLeft" />
+
+                    <ImageView
+                        android:id="@+id/iconView"
+                        android:layout_width="@dimen/_15sdp"
+                        android:layout_height="@dimen/_15sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:src="@drawable/view"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/iconCopy"
+                        />
+
+                    <ImageView
+                        android:id="@+id/iconCopy"
+                        android:layout_width="@dimen/_15sdp"
+                        android:layout_height="@dimen/_15sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:src="@drawable/copy"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/iconView"
+                        />
+
+                    <TextView
+                        android:id="@+id/tvNumberOfViews"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        app:layout_constraintStart_toEndOf="@id/iconView"
+                        app:layout_constraintTop_toTopOf="@id/iconView"
+                        app:layout_constraintBottom_toBottomOf="@id/iconView"
+                        />
+
+                    <TextView
+                        android:id="@+id/tvNumberOfCopies"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        app:layout_constraintStart_toEndOf="@id/iconCopy"
+                        app:layout_constraintTop_toTopOf="@id/iconCopy"
+                        app:layout_constraintBottom_toBottomOf="@id/iconCopy"
+                        />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </FrameLayout>
@@ -64,7 +109,9 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/_10sdp"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5sdp"
 
                 app:layout_constraintTop_toBottomOf="@id/bgImage">
 
@@ -86,7 +133,7 @@
                     android:layout_height="wrap_content"
                     android:text="30"
                     android:textSize="15sp"
-                    android:textColor="@android:color/holo_green_light"
+                    android:textColor="@color/design_default_color_primary"
                     android:layout_marginTop="@dimen/_5sdp"
 
                     app:layout_constraintStart_toStartOf="parent"
@@ -96,19 +143,30 @@
                     android:id="@+id/tvDaysUnit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=" days"
+                    android:text=" days - "
                     android:textSize="15sp"
 
                     app:layout_constraintStart_toEndOf="@id/tvDays"
                     app:layout_constraintTop_toTopOf="@id/tvDays"/>
 
                 <TextView
+                    android:id="@+id/tvStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="public"
+                    android:textColor="@android:color/holo_blue_bright"
+                    android:textSize="15sp"
+
+                    app:layout_constraintStart_toEndOf="@id/tvDaysUnit"
+                    app:layout_constraintTop_toTopOf="@id/tvDays"/>
+
+                <TextView
                     android:id="@+id/tvUpdateAtUnit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Updated at: "
-                    android:textSize="15sp"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="Last updated at: "
+                    android:textSize="12sp"
+
 
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvDays"/>
@@ -118,7 +176,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="20/12/2023 13:20:45"
-                    android:textSize="15sp"
+                    android:textSize="12sp"
 
                     app:layout_constraintStart_toEndOf="@id/tvUpdateAtUnit"
                     app:layout_constraintTop_toTopOf="@id/tvUpdateAtUnit"/>
