@@ -1,5 +1,6 @@
 package com.eddiez.plantirrigsys.retrofit
 
+import com.eddiez.plantirrigsys.dataModel.CabinetDataModel
 import com.eddiez.plantirrigsys.dataModel.LoginDataModel
 import com.eddiez.plantirrigsys.dataModel.RSADataModel
 import com.eddiez.plantirrigsys.dataModel.ScheduleDataModel
@@ -16,28 +17,47 @@ import retrofit2.http.Query
 
 interface ApiService {
     @POST("auth/register")
-    suspend fun register(@Body data: UserDataModel): Response<UserDataModel>
+    suspend fun register(@Query("apiKey") apiKey: String, @Body data: UserDataModel): Response<UserDataModel>
 
     @POST("auth/login")
-    suspend fun login(@Body data: LoginDataModel): Response<LoginDataModel>
+    suspend fun login(@Query("apiKey") apiKey: String, @Body data: LoginDataModel): Response<LoginDataModel>
 
     @GET("users/profile")
     suspend fun getProfile(@Header("Authorization") authHeader: String): Response<UserDataModel>
 
+    @GET("devices/id/{id}")
+    suspend fun getCabinet(@Path("id") id: Int, @Query("apiKey") apiKey: String): Response<CabinetDataModel>
+
+    @DELETE("users/cabinet")
+    suspend fun removeCabinet(@Header("Authorization") authHeader: String): Response<UserDataModel>
+
     @GET("users/encrypt")
     suspend fun encrypt(
         @Header("Authorization") authHeader: String,
+        @Query("apiKey") apiKey: String,
         @Query("textData") textData: String
     ): Response<RSADataModel>
 
     @GET("users/decrypt")
     suspend fun decrypt(
         @Header("Authorization") authHeader: String,
+        @Query("apiKey") apiKey: String,
         @Query("encryptedData") encryptedData: String
     ): Response<RSADataModel>
 
+    @PATCH("users/cabinet/{id}")
+    suspend fun connectCabinet(
+        @Header("Authorization") authHeader: String,
+        @Path("id") id: Int,
+        @Query("topic") topic: String,
+        @Query("accessToken") accessToken: String,
+    ): Response<CabinetDataModel>
+
     @GET("schedules")
     suspend fun getSchedulesOfUser(@Header("Authorization") authHeader: String): Response<List<ScheduleDataModel>>
+
+    @GET("schedules/inUse")
+    suspend fun getScheduleInUse(@Header("Authorization") authHeader: String): Response<ScheduleDataModel>
 
     @POST("schedules")
     suspend fun createSchedule(

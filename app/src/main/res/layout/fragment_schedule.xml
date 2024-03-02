@@ -13,18 +13,22 @@
         android:paddingTop="@dimen/_25sdp"
         android:paddingEnd="@dimen/_10sdp">
 
+        <include
+            android:id="@+id/layoutScheduleInUse"
+            layout="@layout/layout_schedule_in_use_item" />
+
         <TextView
             android:id="@+id/mySchedule"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
+            android:layout_marginStart="@dimen/_5sdp"
             android:text="@string/my_schedule"
             android:textSize="26sp"
             android:visibility="gone"
-            android:layout_marginStart="@dimen/_5sdp"
 
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/layoutScheduleInUse" />
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefreshLayout"
@@ -38,87 +42,81 @@
                 android:id="@+id/rv_schedule"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/_10sdp"
-                />
+                android:layout_marginTop="@dimen/_10sdp" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <LinearLayout
             android:id="@+id/bgEmpty"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:orientation="vertical"
             android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/layoutScheduleInUse"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            >
+            app:layout_constraintEnd_toEndOf="parent">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:text="@string/create_or_explore_na_schedule"
-                android:textSize="@dimen/_30ssp"
                 android:gravity="center"
+                android:text="@string/create_or_explore_na_schedule"
                 android:textColor="?android:colorPrimary"
-                />
+                android:textSize="@dimen/_30ssp"
+                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/imgArrow"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/_250sdp"
-                android:visibility="visible"
-                android:src="@drawable/arrow"
+                android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:scaleType="fitXY"
-                android:padding="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_20sdp"
                 android:layout_marginStart="@dimen/_100sdp"
-                android:layout_marginBottom="@dimen/_70sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_80sdp"
+                android:padding="@dimen/_10sdp"
+                android:scaleType="fitXY"
+                android:src="@drawable/arrow"
+                android:visibility="visible"
 
 
-
-                app:layout_constraintTop_toBottomOf="@id/mySchedule"
                 app:layout_constraintBottom_toBottomOf="@id/fab_menu"
-                />
+                app:layout_constraintTop_toBottomOf="@id/mySchedule" />
         </LinearLayout>
 
         <com.github.clans.fab.FloatingActionMenu
             android:id="@+id/fab_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:menu_labels_position="left"
+            android:layout_marginBottom="@dimen/_20sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:menu_animationDelayPerItem="55"
             app:menu_colorNormal="#6750A4"
             app:menu_colorPressed="?android:colorPrimary"
-            app:menu_colorRipple="?android:colorPrimary"
-            android:layout_marginBottom="@dimen/_20sdp"
 
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            >
+            app:menu_colorRipple="?android:colorPrimary"
+            app:menu_labels_position="left">
 
             <com.github.clans.fab.FloatingActionButton
                 android:id="@+id/fabCreate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:fab_label="Create"
-                app:fab_size="normal"
                 android:src="@drawable/ic_create"
                 app:fab_colorNormal="?android:colorAccent"
                 app:fab_colorPressed="?android:colorAccent"
                 app:fab_colorRipple="#99FFFFFF"
-               />
+                app:fab_label="Create"
+                app:fab_size="normal" />
 
             <com.github.clans.fab.FloatingActionButton
                 android:id="@+id/fabExplore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:fab_label="Explore"
-                app:fab_size="normal"
+                android:src="@drawable/ic_explore"
                 app:fab_colorNormal="?android:colorAccent"
                 app:fab_colorPressed="?android:colorAccent"
                 app:fab_colorRipple="#99FFFFFF"
-                android:src="@drawable/ic_explore" />
+                app:fab_label="Explore"
+                app:fab_size="normal" />
         </com.github.clans.fab.FloatingActionMenu>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -127,12 +125,11 @@
         android:layout_width="@dimen/_150sdp"
         android:layout_height="@dimen/_150sdp"
 
-        android:src="@mipmap/ic_launcher"
         android:layout_gravity="center"
+        android:src="@mipmap/ic_launcher"
 
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </FrameLayout>

@@ -28,6 +28,10 @@ data class ScheduleDataModel(
     val nThreshold: Float? = null,
     val pThreshold: Float? = null,
     val kThreshold: Float? = null,
+
+    val registrationDate: String? = null,
+    val startedDate: String? = null,
+    val listDateData: List<DateDataModel>? = null,
 ) : Serializable {
     override fun toString(): String {
         return "ScheduleDataModel(id=$id, title=$title, description=$description, plantName=$plantName, numberOfViews=$numberOfViews, numberOfCopies=$numberOfCopies, numberOfDates=$numberOfDates, isPublic=$isPublic, createAt=$createAt, updateContentAt=$updateContentAt, slots=$slots, moistureThreshold=$moistureThreshold, temperatureThreshold=$temperatureThreshold, ecThreshold=$ecThreshold, pHThreshold=$pHThreshold, nThreshold=$nThreshold, pThreshold=$pThreshold, kThreshold=$kThreshold)"

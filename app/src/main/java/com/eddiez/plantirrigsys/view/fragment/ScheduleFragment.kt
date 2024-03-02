@@ -1,16 +1,23 @@
 package com.eddiez.plantirrigsys.view.fragment
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.eddiez.plantirrigsys.R
 import com.eddiez.plantirrigsys.base.BaseFragment
 import com.eddiez.plantirrigsys.dataModel.ScheduleDataModel
 import com.eddiez.plantirrigsys.databinding.FragmentScheduleBinding
 import com.eddiez.plantirrigsys.utilities.AppConstants
+import com.eddiez.plantirrigsys.utilities.Utils
+import com.eddiez.plantirrigsys.utilities.Utils.convertAndFormatDate
 import com.eddiez.plantirrigsys.view.activity.CreateScheduleActivity
 import com.eddiez.plantirrigsys.view.activity.ExploreScheduleActivity
 import com.eddiez.plantirrigsys.view.adapter.ScheduleItemAdapter
@@ -68,6 +75,14 @@ class ScheduleFragment : BaseFragment() {
             }
         }
 
+        scheduleViewModel.scheduleInUse.observe(viewLifecycleOwner) {
+            if (it != null) {
+                setupScheduleInUse(it)
+            } else {
+                binding.layoutScheduleInUse.root.visibility = View.GONE
+            }
+        }
+
         scheduleViewModel.schedules.observe(viewLifecycleOwner) {
             if (it != null) {
                 // check current list
@@ -119,11 +134,88 @@ class ScheduleFragment : BaseFragment() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
+    private fun setupScheduleInUse(item: ScheduleDataModel) {
+        binding.layoutScheduleInUse.root.visibility = View.VISIBLE
+
+        binding.layoutScheduleInUse.tvTitle.text = item.title
+
+        val numberOfDay = item.numberOfDates
+        if (numberOfDay != null) {
+
+            // count %
+            var numberDateDone = 0
+            val currentDate = Utils.getCurrentDateString()
+
+            Log.d("ScheduleFragment", "currentDate: $currentDate")
+
+            item.listDateData!!.find { it.date == currentDate }?.let {
+                numberDateDone = it.index!!
+            }
+
+            binding.layoutScheduleInUse.tvDays.text = "$numberDateDone/$numberOfDay"
+            if (numberOfDay > 1) {
+                binding.layoutScheduleInUse.tvDaysUnit.text = " days - "
+            } else {
+                binding.layoutScheduleInUse.tvDaysUnit.text = " day - "
+            }
+        }
+
+        val updatedTime = item.updateContentAt
+        if (updatedTime != null) {
+            val dateTime = convertAndFormatDate(updatedTime)
+
+            binding.layoutScheduleInUse.tvUpdateAt.text = dateTime
+        }
+
+        if (item.isPublic == true) {
+            binding.layoutScheduleInUse.tvStatus.text = "Public"
+            binding.layoutScheduleInUse.tvStatus.setTextColor(binding.root.resources.getColor(android.R.color.holo_green_dark, null))
+
+            binding.layoutScheduleInUse.iconView.visibility = View.VISIBLE
+            binding.layoutScheduleInUse.iconCopy.visibility = View.VISIBLE
+            binding.layoutScheduleInUse.tvNumberOfViews.visibility = View.VISIBLE
+            binding.layoutScheduleInUse.tvNumberOfCopies.visibility = View.VISIBLE
+
+            binding.layoutScheduleInUse.tvNumberOfViews.text = item.numberOfViews.toString()
+            binding.layoutScheduleInUse.tvNumberOfCopies.text = item.numberOfCopies.toString()
+        } else {
+            binding.layoutScheduleInUse.tvStatus.text = "Private"
+            binding.layoutScheduleInUse.tvStatus.setTextColor(binding.root.resources.getColor(android.R.color.holo_orange_dark, null))
+
+            binding.layoutScheduleInUse.iconView.visibility = View.GONE
+            binding.layoutScheduleInUse.iconCopy.visibility = View.GONE
+            binding.layoutScheduleInUse.tvNumberOfViews.visibility = View.GONE
+            binding.layoutScheduleInUse.tvNumberOfCopies.visibility = View.GONE
+        }
+
+        val imageUrl = item.imageData
+        if (!imageUrl.isNullOrEmpty()) {
+
+            Glide.with(binding.root)
+                .asBitmap()
+                .load(imageUrl)
+                .placeholder(R.drawable.image_default)
+                .error(R.drawable.image_default)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(binding.layoutScheduleInUse.imgSchedule)
+        }
+
+        binding.root.setOnClickListener {
+            val intent = Intent(requireContext(), CreateScheduleActivity::class.java)
+            intent.putExtra(AppConstants.SCHEDULE, item)
+            intent.putExtra(AppConstants.IN_USE, true)
+            startActivity(intent)
+        }
+    }
+
     private fun refreshData() {
         // Refresh data in your RecyclerView
         userViewModel.accessToken.value?.let { token ->
             if (token.isNotEmpty()) {
                 scheduleViewModel.getSchedules(token)
+
+                scheduleViewModel.getScheduleInUse(token)
             }
         }
     }

@@ -11,6 +11,7 @@
     <string name="title_dialog_logout">Confirm Logout</string>
     <string name="supporting_text_dialog_logout">Are you sure you want to log out? You will need to login to access your account again.</string>
     <string name="title_dialog_connect_cabin">Confirm Connect Cabin</string>
+<!--    <string name="title_dialog_remove_cabin">Are you sure to remove cabinet</string>-->
     <string name="text_dialog_connect_cabin">Are you sure you want to log out? You will need to login to access your account again.</string>
     <string name="my_schedule">My schedules</string>
     <string name="create_or_explore_na_schedule">Create or Explore\na schedule</string>
@@ -23,4 +24,5 @@
     <string name="title_dialog_delete_schedule">Confirm Delete</string>
     <string name="title_activity_maps">MapsActivity</string>
 
+    <string name="api_key">InVMJN87fOOSvcI15qYnTRDj2YYe8hxH</string>
 </resources>

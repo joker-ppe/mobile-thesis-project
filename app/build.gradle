@@ -1,9 +1,10 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.devtools.ksp'
+    id 'kotlin-kapt'
     // Add the Google services Gradle plugin
     id 'com.google.gms.google-services'
-    id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
@@ -61,7 +62,7 @@ dependencies {
 
     // firebase
     // Import the Firebase BoM
-    implementation(platform('com.google.firebase:firebase-bom:32.7.2'))
+    implementation(platform('com.google.firebase:firebase-bom:32.7.3'))
 
     // When using the BoM, you don't specify versions in Firebase library dependencies
     // Add the dependency for the Firebase SDK for Google Analytics
@@ -83,8 +84,8 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0'
 
     // Hilt
-    implementation 'com.google.dagger:hilt-android:2.50'
-    kapt 'com.google.dagger:hilt-compiler:2.50'
+    implementation 'com.google.dagger:hilt-android:2.51'
+    kapt 'com.google.dagger:hilt-compiler:2.51'
 
     // ViewModel
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0'
@@ -117,7 +118,7 @@ dependencies {
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
 
     implementation 'com.github.bumptech.glide:glide:4.16.0'
-    kapt 'com.github.bumptech.glide:compiler:4.16.0'
+    ksp 'com.github.bumptech.glide:ksp:4.16.0'
 
     implementation 'com.github.clans:fab:1.6.4'
 
@@ -130,4 +131,9 @@ dependencies {
 
     // rabbitmq
     implementation 'com.rabbitmq:amqp-client:5.20.0'
+
+    // chart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    implementation 'ch.qos.logback:logback-classic:1.2.3'
 }

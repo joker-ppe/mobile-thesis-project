@@ -2,10 +2,12 @@ package com.eddiez.plantirrigsys.utilities
 
 object AppConstants {
     const val ACCESS_TOKEN = "ACCESS_TOKEN"
-    const val USER_DATA = "USER_DATA"
+//    const val USER_DATA = "USER_DATA"
+//    const val CABINET_ID = "CABINET_ID"
 
     const val SCHEDULE = "SCHEDULE"
     const val CLONE = "CLONE"
+    const val IN_USE = "IN_USE"
     const val REQUEST_CODE_MAPS = 128
 
     const val SCHEDULE_NAME = "SCHEDULE_NAME"
@@ -17,4 +19,7 @@ object AppConstants {
 
     const val QRCODE_DATA = "QRCODE_DATA"
 
+
+    const val ERROR_LOGIN = "Login: User not found"
+    const val ERROR_QR_CODE = "ERROR_QR_CODE"
 }

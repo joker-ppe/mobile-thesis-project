@@ -19,6 +19,7 @@ class ScheduleViewModel @Inject constructor(
     val schedules = MutableLiveData<List<ScheduleDataModel>>()
     val publicSchedules = MutableLiveData<List<ScheduleDataModel>>()
     val currentSchedule = MutableLiveData<ScheduleDataModel>()
+    val scheduleInUse = MutableLiveData<ScheduleDataModel>()
     val newSchedule = MutableLiveData<ScheduleDataModel>()
     val accessTokenExpired = MutableLiveData<Boolean>()
     fun getSchedules(accessToken: String) = viewModelScope.launch {
@@ -26,6 +27,24 @@ class ScheduleViewModel @Inject constructor(
             val response = dataRepository.getSchedules(accessToken)
             if (response.isSuccessful && response.body() != null) {
                 schedules.postValue(response.body())
+            } else {
+                // Handle errors
+                response.errorBody()?.string()?.let { Log.e("Error", it) }
+
+                if (response.code() == 401) {
+                    accessTokenExpired.postValue(true)
+                }
+            }
+        }catch (e: Exception) {
+            Log.e("Error",e.message.toString())
+        }
+    }
+
+    fun getScheduleInUse(accessToken: String) = viewModelScope.launch {
+        try {
+            val response = dataRepository.getScheduleInUse(accessToken)
+            if (response.isSuccessful && response.body() != null) {
+                scheduleInUse.postValue(response.body())
             } else {
                 // Handle errors
                 response.errorBody()?.string()?.let { Log.e("Error", it) }

@@ -14,4 +14,8 @@ data class UserDataModel (
     val city: String? = null,
     val country: String? = null,
     val photoUrl: String? = null,
+
+    val scheduleIdInUse: Int? = null,
+    val deviceId: Int? = null,
+    val deviceAccessToken: String? = null,
 ): Serializable

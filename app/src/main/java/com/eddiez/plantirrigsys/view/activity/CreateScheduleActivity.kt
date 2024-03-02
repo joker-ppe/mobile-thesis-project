@@ -37,6 +37,7 @@ class CreateScheduleActivity : BaseActivity() {
     private var selectedImageUri: Uri? = null
     private var idSchedule: Int? = null
     private var isClone = false
+    private var isInUse = false
     private var latitude: Double = AppConstants.LATITUDE_DEFAULT
     private var longitude: Double = AppConstants.LONGITUDE_DEFAULT
 
@@ -49,7 +50,9 @@ class CreateScheduleActivity : BaseActivity() {
             if (uri != null) {
                 Log.d("PhotoPicker", "Selected URI: $uri")
 
-                binding.imgData.setImageURI(uri)
+                Glide.with(this)
+                    .load(uri)
+                    .into(binding.imgData)
 
                 // Save the selected image URI
                 selectedImageUri = uri
@@ -124,6 +127,7 @@ class CreateScheduleActivity : BaseActivity() {
         }
 
         isClone = intent.extras?.getBoolean(AppConstants.CLONE, false) ?: false
+        isInUse = intent.extras?.getBoolean(AppConstants.IN_USE, false) ?: false
 
         binding.topAppBar.setNavigationOnClickListener {
             finish()
@@ -212,7 +216,6 @@ class CreateScheduleActivity : BaseActivity() {
             pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
 
-
         if (schedule != null) {
 
             if (isClone) {
@@ -223,6 +226,10 @@ class CreateScheduleActivity : BaseActivity() {
                 binding.topAppBar.title = "Update Schedule"
                 binding.btnSave.text = "Update"
                 binding.tvDelete.visibility = View.VISIBLE
+
+                if (isInUse) {
+                    binding.topAppBar.title = "Update Schedule Using"
+                }
             }
 
 
@@ -314,6 +321,20 @@ class CreateScheduleActivity : BaseActivity() {
             binding.ftfTemperatureThreshold.visibility = View.GONE
             binding.ftfMoistureThreshold.visibility = View.GONE
 
+            binding.tvDelete.visibility = View.GONE
+        }
+
+        if (isInUse) {
+//            binding.filledTextFieldTitle.isEnabled = false
+//            binding.filledTextFieldDescription.isEnabled = false
+            binding.filledTextFieldNumberDays.isEnabled = false
+            binding.filledTextFieldNumberSlots.isEnabled = false
+//            binding.cbPublic.isEnabled = false
+//            binding.cbMoistureThreshold.isEnabled = false
+//            binding.cbTemperatureThreshold.isEnabled = false
+//            binding.imgData.isEnabled = false
+//            binding.bgLocation.isEnabled = false
+//            binding.btnSave.isEnabled = false
             binding.tvDelete.visibility = View.GONE
         }
 
@@ -487,7 +508,6 @@ class CreateScheduleActivity : BaseActivity() {
     }
 
     private fun createLayoutSlots(value: Int, slots: List<SlotDataModel>?) {
-
         if (slots != null) {
             for (i in slots.indices) {
                 val slot = slots[i]
@@ -524,6 +544,8 @@ class CreateScheduleActivity : BaseActivity() {
                     setBackgroundResource(R.drawable.textview_border)
                     textAlignment = View.TEXT_ALIGNMENT_CENTER
                     setPadding(0, 10, 0, 10)
+
+                    isEnabled = !isInUse
 
                     setOnClickListener {
                         val timeStart = currentTv.text
@@ -569,6 +591,8 @@ class CreateScheduleActivity : BaseActivity() {
                     setBackgroundResource(R.drawable.textview_border)
                     textAlignment = View.TEXT_ALIGNMENT_CENTER
                     setPadding(0, 10, 0, 10)
+
+                    isEnabled = !isInUse
 
                     setOnClickListener {
                         val timeStart = currentTv.text

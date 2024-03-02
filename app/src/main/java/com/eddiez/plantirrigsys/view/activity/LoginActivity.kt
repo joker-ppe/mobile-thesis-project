@@ -11,8 +11,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
 import com.eddiez.plantirrigsys.R
 import com.eddiez.plantirrigsys.base.BaseActivity
-import com.eddiez.plantirrigsys.databinding.ActivityLoginBinding
+import com.eddiez.plantirrigsys.base.MyApplication
 import com.eddiez.plantirrigsys.dataModel.UserDataModel
+import com.eddiez.plantirrigsys.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
@@ -78,7 +79,7 @@ class LoginActivity : BaseActivity() {
                     userViewModel.userData.postValue(userData)
 
 //                    viewModel.register(userData)
-                    userViewModel.login(userData)
+                    userViewModel.login(MyApplication.getApiKey(), userData)
                 }
 
             }
@@ -116,7 +117,12 @@ class LoginActivity : BaseActivity() {
                 // Update UI with successful response data
                 Log.d(TAG, response.toString())
 
-                userViewModel.userData.value?.let { userViewModel.login(it) }
+                userViewModel.userData.value?.let {
+                    userViewModel.login(
+                        MyApplication.getApiKey(),
+                        it
+                    )
+                }
             }
         })
 
@@ -132,17 +138,6 @@ class LoginActivity : BaseActivity() {
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 }
                 startActivity(intent)
-            }
-        })
-
-        userViewModel.errorMessage.observe(this, Observer { error ->
-            if (error.isNotEmpty()) {
-                Log.e(TAG, error.toString())
-//                Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
-
-                if (error == "Login: User not found") {
-                    userViewModel.userData.value?.let { userViewModel.register(it) }
-                }
             }
         })
     }
