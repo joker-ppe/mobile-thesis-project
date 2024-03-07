@@ -31,6 +31,7 @@ data class ScheduleDataModel(
 
     val registrationDate: String? = null,
     val startedDate: String? = null,
+    val stoppedDate: String? = null,
     val listDateData: List<DateDataModel>? = null,
 ) : Serializable {
     override fun toString(): String {

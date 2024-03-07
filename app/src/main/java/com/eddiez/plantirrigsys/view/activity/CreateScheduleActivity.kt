@@ -9,6 +9,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.AdapterView
 import android.widget.CompoundButton
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -295,8 +296,7 @@ class CreateScheduleActivity : BaseActivity() {
 
             binding.filledTextFieldNumberDays.editText?.text =
                 Editable.Factory.getInstance().newEditable(schedule.numberOfDates.toString())
-            binding.filledTextFieldNumberSlots.editText?.text =
-                Editable.Factory.getInstance().newEditable(schedule.slots?.size.toString())
+            binding.spinnerNumberSlots.setSelection(getPositionValueSpinner(schedule.slots?.size.toString()))
 
             binding.cbMoistureThreshold.isChecked = schedule.moistureThreshold != -1f
             if (schedule.moistureThreshold != -1f) {
@@ -328,7 +328,7 @@ class CreateScheduleActivity : BaseActivity() {
 //            binding.filledTextFieldTitle.isEnabled = false
 //            binding.filledTextFieldDescription.isEnabled = false
             binding.filledTextFieldNumberDays.isEnabled = false
-            binding.filledTextFieldNumberSlots.isEnabled = false
+            binding.spinnerNumberSlots.isEnabled = false
 //            binding.cbPublic.isEnabled = false
 //            binding.cbMoistureThreshold.isEnabled = false
 //            binding.cbTemperatureThreshold.isEnabled = false
@@ -338,34 +338,55 @@ class CreateScheduleActivity : BaseActivity() {
             binding.tvDelete.visibility = View.GONE
         }
 
-        binding.filledTextFieldNumberSlots.editText?.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // Không làm gì ở đây
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (!s.isNullOrEmpty()) {
-                    val value = s.toString().toIntOrNull()
-                    if (value == null || value < 1 || value > 3) {
-                        binding.filledTextFieldNumberSlots.error = "Slots from 1 to 3"
-
-                        // xóa hết các view cũ
-                        binding.bgSlots.removeAllViews()
-                    } else {
-                        binding.filledTextFieldNumberSlots.error = null
-
-                        // xóa hết các view cũ
-                        binding.bgSlots.removeAllViews()
-                        // tạo layout mới
-                        createLayoutSlots(value, null)
-                    }
+        binding.spinnerNumberSlots.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val value = parent?.getItemAtPosition(position).toString().toIntOrNull()
+                if (value != null) {
+                    // xóa hết các view cũ
+                    binding.bgSlots.removeAllViews()
+                    // tạo layout mới
+                    createLayoutSlots(value, null)
                 }
             }
 
-            override fun afterTextChanged(s: Editable?) {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
                 // Không làm gì ở đây
             }
-        })
+        }
+
+//        binding.filledTextFieldNumberSlots.editText?.addTextChangedListener(object : TextWatcher {
+//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+//                // Không làm gì ở đây
+//            }
+//
+//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//                if (!s.isNullOrEmpty()) {
+//                    val value = s.toString().toIntOrNull()
+//                    if (value == null || value < 1 || value > 3) {
+//                        binding.filledTextFieldNumberSlots.error = "Slots from 1 to 3"
+//
+//                        // xóa hết các view cũ
+//                        binding.bgSlots.removeAllViews()
+//                    } else {
+//                        binding.filledTextFieldNumberSlots.error = null
+//
+//                        // xóa hết các view cũ
+//                        binding.bgSlots.removeAllViews()
+//                        // tạo layout mới
+//                        createLayoutSlots(value, null)
+//                    }
+//                }
+//            }
+//
+//            override fun afterTextChanged(s: Editable?) {
+//                // Không làm gì ở đây
+//            }
+//        })
 
         // btn Save
         binding.btnSave.setOnClickListener {
@@ -428,6 +449,15 @@ class CreateScheduleActivity : BaseActivity() {
 
                 mapsResultLauncher.launch(intent)
             }
+        }
+    }
+
+    private fun getPositionValueSpinner(value: String): Int {
+        return when (value) {
+            "1" -> 0
+            "2" -> 1
+            "3" -> 2
+            else -> 0
         }
     }
 
@@ -546,6 +576,7 @@ class CreateScheduleActivity : BaseActivity() {
                     setPadding(0, 10, 0, 10)
 
                     isEnabled = !isInUse
+
 
                     setOnClickListener {
                         val timeStart = currentTv.text
@@ -712,6 +743,8 @@ class CreateScheduleActivity : BaseActivity() {
                     textAlignment = View.TEXT_ALIGNMENT_CENTER
                     setPadding(0, 10, 0, 10)
 
+                    isEnabled = !isInUse
+
                     setOnClickListener {
                         val timeStart = currentTv.text
                         val hourStart = timeStart.split(':')[0].toInt()
@@ -756,6 +789,8 @@ class CreateScheduleActivity : BaseActivity() {
                     setBackgroundResource(R.drawable.textview_border)
                     textAlignment = View.TEXT_ALIGNMENT_CENTER
                     setPadding(0, 10, 0, 10)
+
+                    isEnabled = !isInUse
 
                     setOnClickListener {
                         val timeStart = currentTv.text

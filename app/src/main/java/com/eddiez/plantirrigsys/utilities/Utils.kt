@@ -3,7 +3,13 @@ package com.eddiez.plantirrigsys.utilities
 import android.graphics.Bitmap
 import android.icu.text.SimpleDateFormat
 import android.icu.util.TimeZone
+import java.time.Duration
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
 import java.util.Locale
+import kotlin.math.abs
 
 object Utils {
     fun resizeImage(source: Bitmap, maxWidth: Int, maxHeight: Int): Bitmap {
@@ -36,8 +42,47 @@ object Utils {
         return date?.let { desiredFormat.format(it) }
     }
 
+    fun formatDateToShortMonthStyle(date: LocalDate): String {
+        val format = DateTimeFormatter.ofPattern("MMM dd", Locale.getDefault())
+        return format.format(date)
+    }
+
+    fun convertDate(dateString: String): LocalDate? {
+        val format = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        return try {
+            LocalDate.parse(dateString, format)
+        } catch (e: DateTimeParseException) {
+            e.printStackTrace()
+            null
+        }
+    }
+
     fun getCurrentDateString(): String {
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         return sdf.format(System.currentTimeMillis())
+    }
+
+
+    fun convertStringToTime(timeString: String): LocalTime? {
+        val format = DateTimeFormatter.ofPattern("HH:mm")
+        return try {
+            LocalTime.parse(timeString, format)
+        } catch (e: DateTimeParseException) {
+            e.printStackTrace()
+
+            try {
+                val format = DateTimeFormatter.ofPattern("H:mm")
+                LocalTime.parse(timeString, format)
+            } catch (e: DateTimeParseException) {
+                e.printStackTrace()
+                null
+            }
+            
+        }
+    }
+
+    fun calculateTotalSeconds(localTime1: LocalTime, localTime2: LocalTime): Long {
+        val duration = Duration.between(localTime1, localTime2)
+        return abs(duration.seconds)
     }
 }

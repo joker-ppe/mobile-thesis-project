@@ -187,28 +187,70 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/filledTextFieldNumberSlots"
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:id="@+id/filledTextFieldNumberSlots"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:hint="@string/number_of_irrigation_slots"-->
+<!--                android:layout_marginTop="@dimen/_10sdp"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/filledTextFieldNumberDays">-->
+
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:inputType="number"-->
+<!--                    android:maxLines="1" />-->
+
+<!--                -->
+
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+            <LinearLayout
+                android:id="@+id/bgNumberSlots"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/number_of_irrigation_slots"
+                android:orientation="horizontal"
                 android:layout_marginTop="@dimen/_10sdp"
-                app:layout_constraintTop_toBottomOf="@id/filledTextFieldNumberDays">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/filledTextFieldNumberDays"
+                >
+                <TextView
+                    android:id="@+id/tvNumberSlots"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:maxLines="1" />
+                    android:text="@string/number_of_irrigation_slots"
+                    android:textStyle="bold"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp"
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:background="@drawable/spinner_border"
+                    >
+                    <Spinner
+                        android:id="@+id/spinnerNumberSlots"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:entries="@array/number_slot"
+                        app:layout_constraintStart_toEndOf="@id/tvNumberSlots"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/tvNumberSlots"
+                        app:layout_constraintBottom_toBottomOf="@id/tvNumberSlots"
+
+                        />
+                </FrameLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/bgSlots"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@+id/filledTextFieldNumberSlots">
+                app:layout_constraintTop_toBottomOf="@+id/bgNumberSlots">
 
 
             </LinearLayout>

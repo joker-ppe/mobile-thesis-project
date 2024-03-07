@@ -8,6 +8,7 @@ object AppConstants {
     const val SCHEDULE = "SCHEDULE"
     const val CLONE = "CLONE"
     const val IN_USE = "IN_USE"
+    const val SLOT_ID_IRRIGATING = "SLOT_ID_IRRIGATING"
     const val REQUEST_CODE_MAPS = 128
 
     const val SCHEDULE_NAME = "SCHEDULE_NAME"

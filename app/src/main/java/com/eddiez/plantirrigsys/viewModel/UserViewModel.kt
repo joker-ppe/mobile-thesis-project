@@ -50,6 +50,8 @@ class UserViewModel @Inject constructor(
     val messageReceived = MutableLiveData<String>()
     val temperatureReceived = MutableLiveData<Float>()
     val humidityReceived = MutableLiveData<Float>()
+    val lightReceived = MutableLiveData<Float>()
+    val actionReceived = MutableLiveData<String>()
 
     val accessToken = MediatorLiveData<String>().apply {
         addSource(
@@ -172,8 +174,10 @@ class UserViewModel @Inject constructor(
         }
     }
 
-    fun consumeTemperature(exchangeName: String, queueName: String) {
+    fun consumeTemperature(cabinetId: Int, userId: Int, deviceId: String) {
         scope.launch {
+            val exchangeName = "cabinet.$cabinetId.temperature"
+            val queueName = "user.$userId.$deviceId.temperature"
             val rabbitMqClient = RabbitMqClient()
             runBlocking { rabbitMqClient.connect() }
             rabbitMqClient.consumeMessage(exchangeName, queueName, object : OnMessageReceived {
@@ -184,8 +188,10 @@ class UserViewModel @Inject constructor(
         }
     }
 
-    fun consumeHumidity(exchangeName: String, queueName: String) {
+    fun consumeHumidity(cabinetId: Int, userId: Int, deviceId: String) {
         scope.launch {
+            val exchangeName = "cabinet.$cabinetId.humidity"
+            val queueName = "user.$userId.$deviceId.humidity"
             val rabbitMqClient = RabbitMqClient()
             runBlocking { rabbitMqClient.connect() }
             rabbitMqClient.consumeMessage(exchangeName, queueName, object : OnMessageReceived {
@@ -196,8 +202,24 @@ class UserViewModel @Inject constructor(
         }
     }
 
-    fun consumeMessage(exchangeName: String, queueName: String) {
+    fun consumeLight(cabinetId: Int, userId: Int, deviceId: String) {
         scope.launch {
+            val exchangeName = "cabinet.$cabinetId.light"
+            val queueName = "user.$userId.$deviceId.light"
+            val rabbitMqClient = RabbitMqClient()
+            runBlocking { rabbitMqClient.connect() }
+            rabbitMqClient.consumeMessage(exchangeName, queueName, object : OnMessageReceived {
+                override fun onMessageReceived(message: String) {
+                    lightReceived.postValue(message.toFloatOrNull()) // Update LiveData with the new message
+                }
+            })
+        }
+    }
+
+    fun consumeMessage(cabinetId: Int, userId: Int, deviceId: String) {
+        scope.launch {
+            val exchangeName = "cabinet.$cabinetId.messages"
+            val queueName = "user.$userId.$deviceId.messages"
             val rabbitMqClient = RabbitMqClient()
             runBlocking { rabbitMqClient.connect() }
             rabbitMqClient.consumeMessage(exchangeName, queueName, object : OnMessageReceived {
@@ -208,9 +230,32 @@ class UserViewModel @Inject constructor(
         }
     }
 
-    fun connectCabinet(accessToken: String, id: Int, topic: String) = viewModelScope.launch {
+    fun sendActionToCabinet(cabinetId: Int, message: String) {
+        scope.launch {
+            val exchangeName = "cabinet.$cabinetId.action"
+            val rabbitMqClient = RabbitMqClient()
+            runBlocking { rabbitMqClient.connect() }
+            rabbitMqClient.sendMessage(exchangeName, message)
+        }
+    }
+
+    fun consumeAction(cabinetId: Int, userId: Int, deviceId: String) {
+        scope.launch {
+            val exchangeName = "cabinet.$cabinetId.action.reply"
+            val queueName = "user.$userId.$deviceId.action.reply"
+            val rabbitMqClient = RabbitMqClient()
+            runBlocking { rabbitMqClient.connect() }
+            rabbitMqClient.consumeMessage(exchangeName, queueName, object : OnMessageReceived {
+                override fun onMessageReceived(message: String) {
+                    actionReceived.postValue(message) // Update LiveData with the new message
+                }
+            })
+        }
+    }
+
+    fun connectCabinet(accessToken: String, id: Int) = viewModelScope.launch {
         try {
-            val response = dataRepository.connectCabinet(accessToken, id, topic)
+            val response = dataRepository.connectCabinet(accessToken, id)
             if (response.isSuccessful && response.body() != null) {
                 // Handle successful response
                 Log.d("Connect Cabinet", response.body().toString())

@@ -19,6 +19,9 @@
         android:theme="@style/Theme.PlantIrrigSys"
         tools:targetApi="s">
         <activity
+            android:name=".view.activity.ScheduleInfoActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.activity.ViewScheduleActivity"
             android:exported="false" />
 
@@ -56,7 +59,7 @@
             android:exported="false" />
         <activity
             android:name=".view.activity.MainActivity"
-            android:exported="true" /> <!-- Trigger Google Play services to install the backported photo picker module. -->
+            android:exported="true" />
         <service
             android:name="com.google.android.gms.metadata.ModuleDependencies"
             android:enabled="false"
@@ -66,6 +69,7 @@
                 <action android:name="com.google.android.gms.metadata.MODULE_DEPENDENCIES" />
             </intent-filter>
 
+            <!-- Trigger Google Play services to install the backported photo picker module. -->
             <meta-data
                 android:name="photopicker_activity:0:required"
                 android:value="" />

@@ -17,9 +17,10 @@ class ScheduleViewModel @Inject constructor(
 ) : ViewModel(), DefaultLifecycleObserver {
 
     val schedules = MutableLiveData<List<ScheduleDataModel>>()
+    val schedulesToChoose = MutableLiveData<List<ScheduleDataModel>>()
     val publicSchedules = MutableLiveData<List<ScheduleDataModel>>()
     val currentSchedule = MutableLiveData<ScheduleDataModel>()
-    val scheduleInUse = MutableLiveData<ScheduleDataModel>()
+    val scheduleInUse = MutableLiveData<ScheduleDataModel?>()
     val newSchedule = MutableLiveData<ScheduleDataModel>()
     val accessTokenExpired = MutableLiveData<Boolean>()
     fun getSchedules(accessToken: String) = viewModelScope.launch {
@@ -40,12 +41,69 @@ class ScheduleViewModel @Inject constructor(
         }
     }
 
+    fun getSchedulesToChoose(accessToken: String) = viewModelScope.launch {
+        try {
+            val response = dataRepository.getSchedules(accessToken)
+            if (response.isSuccessful && response.body() != null) {
+                schedulesToChoose.postValue(response.body())
+            } else {
+                // Handle errors
+                response.errorBody()?.string()?.let { Log.e("Error", it) }
+
+                if (response.code() == 401) {
+                    accessTokenExpired.postValue(true)
+                }
+            }
+        }catch (e: Exception) {
+            Log.e("Error",e.message.toString())
+        }
+    }
+
     fun getScheduleInUse(accessToken: String) = viewModelScope.launch {
         try {
             val response = dataRepository.getScheduleInUse(accessToken)
             if (response.isSuccessful && response.body() != null) {
                 scheduleInUse.postValue(response.body())
             } else {
+                scheduleInUse.postValue(null)
+                // Handle errors
+                response.errorBody()?.string()?.let { Log.e("Error", it) }
+
+                if (response.code() == 401) {
+                    accessTokenExpired.postValue(true)
+                }
+            }
+        }catch (e: Exception) {
+            Log.e("Error",e.message.toString())
+        }
+    }
+
+    fun setScheduleInUse(accessToken: String, id: Int) = viewModelScope.launch {
+        try {
+            val response = dataRepository.setScheduleInUse(accessToken, id)
+            if (response.isSuccessful && response.body() != null) {
+                scheduleInUse.postValue(response.body())
+            } else {
+                scheduleInUse.postValue(null)
+                // Handle errors
+                response.errorBody()?.string()?.let { Log.e("Error", it) }
+
+                if (response.code() == 401) {
+                    accessTokenExpired.postValue(true)
+                }
+            }
+        }catch (e: Exception) {
+            Log.e("Error",e.message.toString())
+        }
+    }
+
+    fun removeScheduleInUse(accessToken: String) = viewModelScope.launch {
+        try {
+            val response = dataRepository.removeScheduleInUse(accessToken)
+            if (response.isSuccessful && response.body() != null) {
+                scheduleInUse.postValue(null)
+            } else {
+                scheduleInUse.postValue(null)
                 // Handle errors
                 response.errorBody()?.string()?.let { Log.e("Error", it) }
 

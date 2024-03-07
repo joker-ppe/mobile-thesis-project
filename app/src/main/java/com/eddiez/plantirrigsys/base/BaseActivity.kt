@@ -1,10 +1,14 @@
 package com.eddiez.plantirrigsys.base
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.view.View
+import android.view.WindowInsetsController
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.eddiez.plantirrigsys.R
 import com.eddiez.plantirrigsys.dataModel.ErrorDataModel
 import com.eddiez.plantirrigsys.utilities.AppConstants
 import com.eddiez.plantirrigsys.view.activity.LoginActivity
@@ -79,5 +83,22 @@ open class BaseActivity : AppCompatActivity() {
         super.onResume()
 
         Fonty.Companion.setFonts(this)
+
+        // Set the status bar color to white
+        window.statusBarColor = resources.getColor(R.color.status_color, null)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            if (window != null) {
+                if (window.insetsController != null) {
+                    window.insetsController?.setSystemBarsAppearance(
+                        WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                        WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+                    )
+                }
+            }
+        } else {
+            @Suppress("DEPRECATION")
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        }
     }
 }

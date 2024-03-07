@@ -49,7 +49,6 @@ interface ApiService {
     suspend fun connectCabinet(
         @Header("Authorization") authHeader: String,
         @Path("id") id: Int,
-        @Query("topic") topic: String,
         @Query("accessToken") accessToken: String,
     ): Response<CabinetDataModel>
 
@@ -58,6 +57,15 @@ interface ApiService {
 
     @GET("schedules/inUse")
     suspend fun getScheduleInUse(@Header("Authorization") authHeader: String): Response<ScheduleDataModel>
+
+    @PATCH("schedules/inUse/{id}")
+    suspend fun setScheduleInUse(
+        @Header("Authorization") authHeader: String,
+        @Path("id") id: Int
+    ): Response<ScheduleDataModel>
+
+    @DELETE("schedules/inUse")
+    suspend fun removeScheduleInUse(@Header("Authorization") authHeader: String): Response<UserDataModel>
 
     @POST("schedules")
     suspend fun createSchedule(

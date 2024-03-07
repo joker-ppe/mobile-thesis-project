@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/bg_date_color"/> <!-- Change the color as needed -->
+    <stroke android:color="@color/black" android:width="@dimen/_1sdp"/> <!-- Change the color as needed -->
+
+    <corners
+        android:bottomRightRadius="@dimen/_25sdp"
+        android:bottomLeftRadius="@dimen/_25sdp"
+        android:topRightRadius="@dimen/_25sdp"
+        android:topLeftRadius="@dimen/_25sdp"/>
+</shape>

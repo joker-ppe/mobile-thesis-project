@@ -124,6 +124,7 @@
         android:id="@+id/imgDefault"
         android:layout_width="@dimen/_150sdp"
         android:layout_height="@dimen/_150sdp"
+        android:visibility="gone"
 
         android:layout_gravity="center"
         android:src="@mipmap/ic_launcher"

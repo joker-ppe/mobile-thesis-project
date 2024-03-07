@@ -18,13 +18,19 @@ class DataRepository @Inject constructor(private val apiService: ApiService) {
     suspend fun decrypt(accessToken: String, apiKey: String, encryptedData: String) =
         apiService.decrypt("Bearer $accessToken", apiKey, encryptedData)
 
-    suspend fun connectCabinet(accessToken: String, id: Int, topic: String) =
-        apiService.connectCabinet("Bearer $accessToken", id, topic, accessToken)
+    suspend fun connectCabinet(accessToken: String, id: Int) =
+        apiService.connectCabinet("Bearer $accessToken", id, accessToken)
 
     suspend fun getSchedules(accessToken: String) =
         apiService.getSchedulesOfUser("Bearer $accessToken")
 
     suspend fun getScheduleInUse(accessToken: String) = apiService.getScheduleInUse("Bearer $accessToken")
+
+    suspend fun setScheduleInUse(accessToken: String, id: Int) =
+        apiService.setScheduleInUse("Bearer $accessToken", id)
+
+    suspend fun removeScheduleInUse(accessToken: String) =
+        apiService.removeScheduleInUse("Bearer $accessToken")
 
     suspend fun createSchedule(accessToken: String, data: ScheduleDataModel) =
         apiService.createSchedule("Bearer $accessToken", data)

@@ -1,8 +1,6 @@
 package com.eddiez.plantirrigsys.view.viewholder
 
 import android.annotation.SuppressLint
-import android.icu.text.SimpleDateFormat
-import android.icu.util.TimeZone
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -10,8 +8,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.eddiez.plantirrigsys.R
 import com.eddiez.plantirrigsys.dataModel.ScheduleDataModel
 import com.eddiez.plantirrigsys.databinding.LayoutExploreScheduleItemBinding
+import com.eddiez.plantirrigsys.utilities.Utils.convertAndFormatDate
 import com.eddiez.plantirrigsys.viewModel.ScheduleViewModel
-import java.util.Locale
 
 class ScheduleExploreItemViewHolder(
     private val binding: LayoutExploreScheduleItemBinding,
@@ -79,17 +77,5 @@ class ScheduleExploreItemViewHolder(
 
         binding.tvOwner.text = "${item.user?.firstName} ${item.user?.lastName}"
 
-    }
-
-    private fun convertAndFormatDate(dateString: String): String? {
-        val originalFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
-        originalFormat.timeZone =
-            TimeZone.getTimeZone("UTC") // Adjust this if your original date is not in UTC
-        val date = originalFormat.parse(dateString)
-
-        val desiredFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
-        desiredFormat.timeZone = TimeZone.getDefault() // Device's default timezone
-
-        return date?.let { desiredFormat.format(it) }
     }
 }
