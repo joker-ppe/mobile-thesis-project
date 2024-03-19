@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/sort_by_name"
-        android:title="Sort by Name"/>
+        android:title="Sắp xếp theo tên"/>
     <item
         android:id="@+id/sort_by_date"
-        android:title="Sort by Date"/>
+        android:title="Sắp xếp theo thời gian cập nhật"/>
     <item
         android:id="@+id/sort_by_view"
-        android:title="Sort by View"/>
+        android:title="Sắp xếp theo số lượt xem"/>
     <item
         android:id="@+id/sort_by_copy"
-        android:title="Sort by Copy"/>
+        android:title="Sắp xếp theo số lượt sao chép"/>
 </menu>

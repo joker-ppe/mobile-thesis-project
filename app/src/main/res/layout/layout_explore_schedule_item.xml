@@ -166,7 +166,7 @@
                     android:id="@+id/tvUpdateAtUnit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Last updated at: "
+                    android:text="Cập nhật lần cuối lúc: "
                     android:textSize="12sp"
 
                     app:layout_constraintStart_toStartOf="parent"
@@ -196,7 +196,7 @@
                     android:id="@+id/tvOwnerTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Owner: "
+                    android:text="Tác giả: "
                     android:textSize="13sp"
                     android:layout_marginTop="@dimen/_5sdp"
 

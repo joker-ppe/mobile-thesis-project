@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/itemRemove"
-        android:title="Stop Using Schedule"
+        android:title="Ngừng sử dụng lịch tưới này"
         android:contentDescription="Remove this schedule"
         app:showAsAction="never" />
 </menu>

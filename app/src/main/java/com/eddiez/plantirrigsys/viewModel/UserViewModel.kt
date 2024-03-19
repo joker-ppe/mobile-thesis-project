@@ -48,9 +48,9 @@ class UserViewModel @Inject constructor(
     val decryptedData = MutableLiveData<String?>()
 
     val messageReceived = MutableLiveData<String>()
-    val temperatureReceived = MutableLiveData<Float>()
-    val humidityReceived = MutableLiveData<Float>()
-    val lightReceived = MutableLiveData<Float>()
+    val temperatureReceived = MutableLiveData<Float?>()
+    val humidityReceived = MutableLiveData<Float?>()
+    val lightReceived = MutableLiveData<Float?>()
     val actionReceived = MutableLiveData<String>()
 
     val accessToken = MediatorLiveData<String>().apply {

@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
-            app:title="Create Schedule"
+            app:title="Tạo lịch mới"
             app:navigationIcon="@drawable/baseline_close_24" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -107,7 +107,7 @@
                     android:id="@+id/tvLatitude"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Latitude: "
+                    android:text="Vĩ độ: "
                     android:textStyle="normal"
 
                     />
@@ -124,7 +124,7 @@
                     android:id="@+id/tvLongitude"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Longitude: "
+                    android:text="Kinh độ: "
                     android:textStyle="normal" />
 
                 <TextView
@@ -267,7 +267,7 @@
                     android:id="@+id/tvStopCondition"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Exceptional irrigation schedule termination condition"
+                    android:text="Điều kiện dừng lịch tưới đặc biệt"
                     android:textStyle="bold"
 
                     app:layout_constraintTop_toTopOf="parent" />
@@ -277,14 +277,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checked="false"
-                    android:text="Soil temperature threshold"
+                    android:text="Ngưỡng nhiệt độ đất"
                     app:layout_constraintTop_toBottomOf="@id/tvStopCondition" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/ftfTemperatureThreshold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Soil temperature threshold (°C)"
+                    android:hint="Ngưỡng nhiệt độ đất (°C)"
                     app:layout_constraintTop_toBottomOf="@id/cbTemperatureThreshold">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -300,14 +300,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checked="false"
-                    android:text="Soil moisture threshold"
+                    android:text="Ngưỡng độ ẩm đất"
                     app:layout_constraintTop_toBottomOf="@id/ftfTemperatureThreshold" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/ftfMoistureThreshold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Soil moisture threshold (%)"
+                    android:hint="Ngưỡng độ ẩm đất (%)"
                     app:layout_constraintTop_toBottomOf="@id/cbMoistureThreshold">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -324,7 +324,7 @@
                 android:id="@+id/tvDelete"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Delete schedule"
+                android:text="Xoá lịch"
                 android:gravity="center"
                 android:textColor="@android:color/holo_red_dark"
                 android:textStyle="bold"
@@ -342,7 +342,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
 
-                android:text="Save"
+                android:text="Lưu"
                 android:textStyle="bold"
                 android:textSize="@dimen/_14ssp"
                 android:textAllCaps="true"

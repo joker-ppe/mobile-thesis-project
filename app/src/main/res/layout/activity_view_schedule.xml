@@ -37,7 +37,7 @@
                 android:id="@+id/tvOwnerTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Owner: "
+                android:text="Tác giả: "
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="italic"
@@ -89,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:lines="3"
-                android:text="Description"
+                android:text="Mô tả"
 
                 app:layout_constraintTop_toBottomOf="@id/bgImgData" />
 
@@ -98,7 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:text="Watering time: "
+                android:text="Thời gian tưới: "
 
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvDescription" />
@@ -128,7 +128,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:text="Daily watering schedule: "
+                android:text="Lịch tưới mỗi ngày: "
 
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvScheduleTime" />
@@ -148,7 +148,7 @@
                 android:id="@+id/tvSlotsUnit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" slots"
+                android:text=" lần"
 
                 app:layout_constraintStart_toEndOf="@id/tvSlotsNumber"
                 app:layout_constraintTop_toTopOf="@id/tvSlots" />
@@ -169,7 +169,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Exceptional irrigation schedule termination condition"
+                android:text="Điều kiện dừng lịch tưới đặc biệt"
                 android:textStyle="bold"
 
                 app:layout_constraintTop_toBottomOf="@+id/bgSlots" />
@@ -179,7 +179,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:text="Soil temperature threshold: "
+                android:text="Ngưỡng nhiệt độ đất: "
 
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvStopCondition" />
@@ -200,7 +200,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:text="Soil moisture threshold: "
+                android:text="Ngưỡng độ ẩm đất: "
 
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvTemperatureThreshold" />

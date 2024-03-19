@@ -90,7 +90,7 @@ class CreateScheduleActivity : BaseActivity() {
 
                     val title = binding.filledTextFieldTitle.editText?.text.toString()
                     if (title.isEmpty()) {
-                        Toast.makeText(this, "Please enter title first", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Vui lòng điền tên lịch tưới", Toast.LENGTH_SHORT).show()
 
                         binding.cbPublic.isChecked = false
                     } else {
@@ -160,7 +160,7 @@ class CreateScheduleActivity : BaseActivity() {
                 if (!s.isNullOrEmpty()) {
                     val value = s.toString().toIntOrNull()
                     if (value == null || value < 1 || value > 100) {
-                        binding.filledTextFieldNumberDays.error = "Days from 1 to 100"
+                        binding.filledTextFieldNumberDays.error = "Ngày tưới chỉ từ 1 đến 100"
                     } else {
                         binding.filledTextFieldNumberDays.error = null
                     }
@@ -180,7 +180,7 @@ class CreateScheduleActivity : BaseActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val value = s.toString().toFloatOrNull()
                 if (value == null || value < 0 || value > 60) {
-                    binding.ftfTemperatureThreshold.error = "Value from 0 to 60"
+                    binding.ftfTemperatureThreshold.error = "Giá trị hợp lệ từ 0 đến 60"
                 } else {
                     binding.ftfTemperatureThreshold.error = null
                 }
@@ -220,23 +220,23 @@ class CreateScheduleActivity : BaseActivity() {
         if (schedule != null) {
 
             if (isClone) {
-                binding.topAppBar.title = "Clone Schedule"
-                binding.btnSave.text = "Save"
+                binding.topAppBar.title = "Sao chép lịch"
+                binding.btnSave.text = "Lưu"
                 binding.tvDelete.visibility = View.GONE
             } else {
-                binding.topAppBar.title = "Update Schedule"
-                binding.btnSave.text = "Update"
+                binding.topAppBar.title = "Cập nhật lịch"
+                binding.btnSave.text = "Cập nhật"
                 binding.tvDelete.visibility = View.VISIBLE
 
                 if (isInUse) {
-                    binding.topAppBar.title = "Update Schedule Using"
+                    binding.topAppBar.title = "Cập nhật lịch đang dùng"
                 }
             }
 
 
             binding.tvDelete.setOnClickListener {
                 val title = "<span style='color:red'>${schedule.title}</span>"
-                val message = "Are you sure you want to delete ${title}?"
+                val message = "Bạn có chắc chắn muốn xóa ${title}?"
 
                 MaterialAlertDialogBuilder(this)
                     .setTitle(resources.getString(R.string.title_dialog_delete_schedule))
@@ -392,7 +392,7 @@ class CreateScheduleActivity : BaseActivity() {
         binding.btnSave.setOnClickListener {
 
             binding.spinKit.visibility = View.VISIBLE
-            binding.btnSave.text = "Uploading..."
+            binding.btnSave.text = "Đang cập nhật..."
 
             // Upload the image when the Save button is clicked
             val inputStream: InputStream? = selectedImageUri?.let { uri ->
@@ -440,7 +440,7 @@ class CreateScheduleActivity : BaseActivity() {
         binding.bgLocation.setOnClickListener {
             val title = binding.filledTextFieldTitle.editText?.text.toString()
             if (title.isEmpty()) {
-                Toast.makeText(this, "Please enter title first", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Vui lòng điền tên lịch", Toast.LENGTH_SHORT).show()
             } else {
                 val intent = Intent(this, MapsActivity::class.java)
                 intent.putExtra(AppConstants.SCHEDULE_NAME, title)
@@ -557,7 +557,7 @@ class CreateScheduleActivity : BaseActivity() {
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         1f
                     )
-                    text = "Slot ${i + 1} from"
+                    text = "Lần ${i + 1} từ"
                     setTextAppearance(R.style.TextStyleSlots)
                     textAlignment = View.TEXT_ALIGNMENT_CENTER
                 }
@@ -587,7 +587,7 @@ class CreateScheduleActivity : BaseActivity() {
                             .setInputMode(MaterialTimePicker.INPUT_MODE_CLOCK)
                             .setTimeFormat(TimeFormat.CLOCK_24H).setHour(hourStart)
                             .setMinute(minuteStart)
-                            .setTitleText("Select start time for slot ${i + 1}").build()
+                            .setTitleText("Chọn thời gian bắt đầu cho lần tưới ${i + 1}").build()
                         picker.addOnPositiveButtonClickListener {
                             // Định dạng thời gian và đặt vào TextView
                             val selectedTime =
@@ -605,7 +605,7 @@ class CreateScheduleActivity : BaseActivity() {
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         1f
                     )
-                    text = "to"
+                    text = "đến"
                     setTextAppearance(R.style.TextStyleSlots)
                     textAlignment = View.TEXT_ALIGNMENT_CENTER
                 }
@@ -634,7 +634,7 @@ class CreateScheduleActivity : BaseActivity() {
                             .setInputMode(MaterialTimePicker.INPUT_MODE_CLOCK)
                             .setTimeFormat(TimeFormat.CLOCK_24H).setHour(hourStart)
                             .setMinute(minuteStart)
-                            .setTitleText("Select end time for slot ${i + 1}").build()
+                            .setTitleText("Chọn thời gian kết thúc cho lần tưới ${i + 1}").build()
                         picker.addOnPositiveButtonClickListener {
                             val timeStart = tvFromTime.text
                             var hourStart = timeStart.split(':')[0].toIntOrNull()
@@ -725,7 +725,7 @@ class CreateScheduleActivity : BaseActivity() {
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         1f
                     )
-                    text = "Slot ${i + 1} from"
+                    text = "Lần ${i + 1} từ"
                     setTextAppearance(R.style.TextStyleSlots)
                     textAlignment = View.TEXT_ALIGNMENT_CENTER
                 }
@@ -754,7 +754,7 @@ class CreateScheduleActivity : BaseActivity() {
                             .setInputMode(MaterialTimePicker.INPUT_MODE_CLOCK)
                             .setTimeFormat(TimeFormat.CLOCK_24H).setHour(hourStart)
                             .setMinute(minuteStart)
-                            .setTitleText("Select start time for slot ${i + 1}").build()
+                            .setTitleText("Chọn thời gian bắt đầu cho lần tưới ${i + 1}").build()
                         picker.addOnPositiveButtonClickListener {
                             // Định dạng thời gian và đặt vào TextView
                             val selectedTime =
@@ -772,7 +772,7 @@ class CreateScheduleActivity : BaseActivity() {
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         1f
                     )
-                    text = "to"
+                    text = "đến"
                     setTextAppearance(R.style.TextStyleSlots)
                     textAlignment = View.TEXT_ALIGNMENT_CENTER
                 }
@@ -801,7 +801,7 @@ class CreateScheduleActivity : BaseActivity() {
                             .setInputMode(MaterialTimePicker.INPUT_MODE_CLOCK)
                             .setTimeFormat(TimeFormat.CLOCK_24H).setHour(hourStart)
                             .setMinute(minuteStart)
-                            .setTitleText("Select end time for slot ${i + 1}").build()
+                            .setTitleText("Chọn thời gian kết thúc cho lần tưới ${i + 1}").build()
                         picker.addOnPositiveButtonClickListener {
                             val timeStart = tvFromTime.text
                             var hourStart = timeStart.split(':')[0].toIntOrNull()

@@ -22,9 +22,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/my_schedule"
-            android:textSize="26sp"
+            android:textSize="@dimen/_18ssp"
             android:visibility="gone"
 
             app:layout_constraintStart_toStartOf="parent"
@@ -61,7 +62,7 @@
                 android:gravity="center"
                 android:text="@string/create_or_explore_na_schedule"
                 android:textColor="?android:colorPrimary"
-                android:textSize="@dimen/_30ssp"
+                android:textSize="@dimen/_25ssp"
                 android:textStyle="bold" />
 
             <ImageView
@@ -104,7 +105,7 @@
                 app:fab_colorNormal="?android:colorAccent"
                 app:fab_colorPressed="?android:colorAccent"
                 app:fab_colorRipple="#99FFFFFF"
-                app:fab_label="Create"
+                app:fab_label="Tạo mới"
                 app:fab_size="normal" />
 
             <com.github.clans.fab.FloatingActionButton
@@ -115,7 +116,7 @@
                 app:fab_colorNormal="?android:colorAccent"
                 app:fab_colorPressed="?android:colorAccent"
                 app:fab_colorRipple="#99FFFFFF"
-                app:fab_label="Explore"
+                app:fab_label="Sao chép"
                 app:fab_size="normal" />
         </com.github.clans.fab.FloatingActionMenu>
     </androidx.constraintlayout.widget.ConstraintLayout>

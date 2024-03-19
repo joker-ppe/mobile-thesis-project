@@ -25,9 +25,9 @@ class ScheduleItemViewHolder(
         if (numberOfDay != null) {
             binding.tvDays.text = "$numberOfDay"
             if (numberOfDay > 1) {
-                binding.tvDaysUnit.text = " days - "
+                binding.tvDaysUnit.text = " ngày - "
             } else {
-                binding.tvDaysUnit.text = " day - "
+                binding.tvDaysUnit.text = " ngày - "
             }
         }
 
@@ -39,7 +39,7 @@ class ScheduleItemViewHolder(
         }
 
         if (item.isPublic == true) {
-            binding.tvStatus.text = "Public"
+            binding.tvStatus.text = "Công khai"
             binding.tvStatus.setTextColor(binding.root.resources.getColor(android.R.color.holo_green_dark, null))
 
             binding.iconView.visibility = View.VISIBLE
@@ -50,7 +50,7 @@ class ScheduleItemViewHolder(
             binding.tvNumberOfViews.text = item.numberOfViews.toString()
             binding.tvNumberOfCopies.text = item.numberOfCopies.toString()
         } else {
-            binding.tvStatus.text = "Private"
+            binding.tvStatus.text = "Riêng tư"
             binding.tvStatus.setTextColor(binding.root.resources.getColor(android.R.color.holo_orange_dark, null))
 
             binding.iconView.visibility = View.GONE

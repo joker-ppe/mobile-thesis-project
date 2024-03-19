@@ -1,19 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:visibility="gone"
     android:background="@android:color/transparent">
 
+    <TextView
+        android:id="@+id/scheduleInUse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="@dimen/_8sdp"
+        android:text="Lịch đang dùng"
+        android:textSize="@dimen/_18ssp"
+        android:visibility="visible"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardScheduleInUse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardElevation="@dimen/_2sdp"
         android:layout_marginStart="@dimen/_3sdp"
         android:layout_marginEnd="@dimen/_3sdp"
         app:cardUseCompatPadding="true"
-        app:strokeWidth="@dimen/_1sdp">
+        app:strokeWidth="@dimen/_1sdp"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scheduleInUse"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -61,17 +79,20 @@
 
                     <TextView
                         android:id="@+id/tvInUse"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="using"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:text="Đang dùng"
                         android:textAllCaps="true"
                         android:textColor="@color/quantum_googred"
                         android:textStyle="bold"
-                        android:rotation="-45"
-                        android:layout_marginTop="@dimen/_10sdp"
+                        android:rotation="20"
+                        android:gravity="center"
+                        android:visibility="gone"
 
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
 
                         />
 
@@ -81,7 +102,7 @@
                         android:layout_height="@dimen/_15sdp"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:src="@drawable/view"
-                        app:layout_constraintTop_toBottomOf="@id/tvInUse"
+                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintBottom_toTopOf="@id/iconCopy"
                         />
@@ -181,7 +202,7 @@
                     android:id="@+id/tvUpdateAtUnit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Last updated at: "
+                    android:text="Cập nhật lần cuối lúc: "
                     android:textSize="12sp"
 
 
@@ -203,4 +224,15 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-</FrameLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_marginStart="@dimen/_50sdp"
+        android:layout_marginEnd="@dimen/_50sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@color/quantum_grey"
+
+        app:layout_constraintTop_toBottomOf="@id/cardScheduleInUse"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -169,7 +169,7 @@ class ScheduleFragment : BaseFragment() {
         }
 
         if (item.isPublic == true) {
-            binding.layoutScheduleInUse.tvStatus.text = "Public"
+            binding.layoutScheduleInUse.tvStatus.text = "Công khai"
             binding.layoutScheduleInUse.tvStatus.setTextColor(binding.root.resources.getColor(android.R.color.holo_green_dark, null))
 
             binding.layoutScheduleInUse.iconView.visibility = View.VISIBLE
@@ -180,7 +180,7 @@ class ScheduleFragment : BaseFragment() {
             binding.layoutScheduleInUse.tvNumberOfViews.text = item.numberOfViews.toString()
             binding.layoutScheduleInUse.tvNumberOfCopies.text = item.numberOfCopies.toString()
         } else {
-            binding.layoutScheduleInUse.tvStatus.text = "Private"
+            binding.layoutScheduleInUse.tvStatus.text = "Riêng tư"
             binding.layoutScheduleInUse.tvStatus.setTextColor(binding.root.resources.getColor(android.R.color.holo_orange_dark, null))
 
             binding.layoutScheduleInUse.iconView.visibility = View.GONE

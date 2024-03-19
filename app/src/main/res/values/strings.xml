@@ -1,27 +1,31 @@
 <resources>
     <string name="app_name">Smart Garden Care</string>
-    <string name="my_api_map_key">AIzaSyDh9zNN_X61kTZVnTEc3nfRiboR5oxzkVU</string>
-    <string name="web_client_id">920429838904-r39q0npj70pflp54hsmedpa72st93l9t.apps.googleusercontent.com</string>
-    <string name="text_label_home">Home</string>
-    <string name="text_label_schedule">Schedule</string>
-    <string name="text_label_profile">Profile</string>
+    <string name="my_api_map_key">AIzaSyAg82Yky2hqI-KjPSXBJQ1jhegNgFmGm1M</string>
+    // debug :920429838904-nvsqir3e1thq7g613ghhmfmhl1grkkei.apps.googleusercontent.com
+    <string name="web_client_id">920429838904-nvsqir3e1thq7g613ghhmfmhl1grkkei.apps.googleusercontent.com</string>
+    // release
+<!--    <string name="web_client_id">920429838904-ovhiv3n5p145h97542sqk1jhr62ge265.apps.googleusercontent.com</string>-->
+
+
+    <string name="text_label_home">Màn hình chính</string>
+    <string name="text_label_schedule">Lịch</string>
+    <string name="text_label_profile">Tài khoản</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="welcome_back">Welcome back,</string>
-    <string name="title_dialog_logout">Confirm Logout</string>
-    <string name="supporting_text_dialog_logout">Are you sure you want to log out? You will need to login to access your account again.</string>
-    <string name="title_dialog_connect_cabin">Confirm Connect Cabinet</string>
+    <string name="welcome_back">Xin chào,</string>
+    <string name="title_dialog_logout">Xác nhận</string>
+    <string name="supporting_text_dialog_logout">Bạn có chắc chắn muốn thoát? Bạn sẽ cần phải đăng nhập để truy cập lại vào tài khoản của mình.</string>
+    <string name="title_dialog_connect_cabin">Xác nhận kết nối tủ</string>
     <!--    <string name="title_dialog_remove_cabin">Are you sure to remove cabinet</string>-->
     <string name="text_dialog_connect_cabin">Are you sure you want to log out? You will need to login to access your account again.</string>
-    <string name="my_schedule">My schedules</string>
-    <string name="create_or_explore_na_schedule">Create or Explore\na schedule</string>
-    <string name="public_for_everyone">Public for everyone</string>
-    <string name="schedule_name">Schedule Name</string>
-    <string name="schedule_description">Schedule Description</string>
-    <string name="image_of_agricultural_crops">Image of agricultural crops</string>
-    <string name="schedule_time_in_days">Schedule time (in days)</string>
-    <string name="number_of_irrigation_slots">Number of irrigation slots</string>
-    <string name="title_dialog_delete_schedule">Confirm Delete</string>
+    <string name="my_schedule">Lịch tưới của tôi</string>
+    <string name="create_or_explore_na_schedule">Tạo hoặc sao chép\nlịch tưới</string>
+    <string name="public_for_everyone">Chia sẻ cho mọi người</string>
+    <string name="schedule_name">Tên lịch tưới</string>
+    <string name="schedule_description">Mô tả</string>
+    <string name="image_of_agricultural_crops">Hình ảnh</string>
+    <string name="schedule_time_in_days">Thời gian tưới (ngày)</string>
+    <string name="number_of_irrigation_slots">Số lần tưới trong ngày</string>
+    <string name="title_dialog_delete_schedule">Xác nhận xoá lịch</string>
     <string name="title_activity_maps">MapsActivity</string>
 
     <string name="api_key">InVMJN87fOOSvcI15qYnTRDj2YYe8hxH</string>
@@ -31,4 +35,6 @@
         <item>2</item>
         <item>3</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

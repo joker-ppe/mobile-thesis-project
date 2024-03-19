@@ -15,8 +15,8 @@ class SlotItemViewHolder(
     fun bind(item: SlotInDateDataModel) {
 
        binding.tvIndex.text = item.index.toString()
-        binding.tvStart.text = "From: ${item.startTime}"
-        binding.tvFinish.text = "To: ${item.endTime}"
+        binding.tvStart.text = "Từ: ${item.startTime}"
+        binding.tvFinish.text = "Đến: ${item.endTime}"
 
         if (item.status == "DONE") {
             binding.imgStatus.visibility = View.VISIBLE

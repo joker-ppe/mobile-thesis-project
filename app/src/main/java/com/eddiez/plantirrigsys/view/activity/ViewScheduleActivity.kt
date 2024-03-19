@@ -109,9 +109,9 @@ class ViewScheduleActivity : BaseActivity() {
             createLayoutSlots(schedule.slots)
 
             binding.tvTemperatureThresholdValue.text =
-                if (schedule.temperatureThreshold != -1f) "${schedule.temperatureThreshold}°C" else "None"
+                if (schedule.temperatureThreshold != -1f) "${schedule.temperatureThreshold}°C" else "Không có"
             binding.tvMoistureThresholdValue.text =
-                if (schedule.moistureThreshold != -1f) "${schedule.moistureThreshold}%" else "None"
+                if (schedule.moistureThreshold != -1f) "${schedule.moistureThreshold}%" else "Không có"
 
 
         } else {
@@ -138,7 +138,7 @@ class ViewScheduleActivity : BaseActivity() {
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     1f
                 )
-                text = "Slot ${i + 1} from"
+                text = "Lần ${i + 1} từ"
                 setTextAppearance(R.style.TextStyleSlots)
                 textAlignment = View.TEXT_ALIGNMENT_CENTER
             }
@@ -163,7 +163,7 @@ class ViewScheduleActivity : BaseActivity() {
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     1f
                 )
-                text = "to"
+                text = "đến"
                 setTextAppearance(R.style.TextStyleSlots)
                 textAlignment = View.TEXT_ALIGNMENT_CENTER
             }

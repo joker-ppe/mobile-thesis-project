@@ -103,7 +103,7 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
             mMap.clear()
 
             // Add a marker at the clicked location
-            mMap.addMarker(MarkerOptions().position(latLng).title("Selected Location"))
+            mMap.addMarker(MarkerOptions().position(latLng).title("Vị trí đã chọn"))
 
             // Move the camera to the clicked location
 //            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
@@ -132,7 +132,7 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
                 mMap.clear()
                 val currentLatLng = LatLng(scheduleLatitude, scheduleLongitude)
                 mMap.addMarker(
-                    MarkerOptions().position(currentLatLng).title("${scheduleName}'s Location")
+                    MarkerOptions().position(currentLatLng).title("Vị trí của ${scheduleName}")
                 )
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
 
@@ -159,7 +159,7 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
                     getCurrentLocation(mMap)
                 } else {
                     // Permission denied, show a toast message
-                    Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Quyền vị trí bị từ chối", Toast.LENGTH_SHORT).show()
                 }
                 return
             }
@@ -195,7 +195,7 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
                     mMap.clear()
                     val currentLatLng = LatLng(it.latitude, it.longitude)
                     mMap.addMarker(
-                        MarkerOptions().position(currentLatLng).title("Current Location")
+                        MarkerOptions().position(currentLatLng).title("Vị trí hiện tại")
                     )
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
 
@@ -252,7 +252,7 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
             }
         } catch (e: Exception) {
             Log.e("MapsActivity", e.message.toString())
-            Toast.makeText(this, "Error when get location. Try again", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Lỗi khi nhận vị trí. Thử lại", Toast.LENGTH_SHORT).show()
         }
 
         Log.d("MapsActivity", "Address: ${address?.getAddressLine(0)}")

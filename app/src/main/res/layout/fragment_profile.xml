@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.Button"
             android:textAllCaps="false"
-            android:text="Logout"
+            android:text="Đăng xuất"
             android:layout_marginBottom="@dimen/_30sdp"
 
             app:layout_constraintBottom_toBottomOf="parent"

@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
-            app:title="Share Location"
+            app:title="Chia sẻ vị trí"
             app:navigationIcon="@drawable/baseline_close_24" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -38,13 +38,13 @@
 
                 app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
+                <ImageView
                     android:id="@+id/tvTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:text="Pick location for: "
+                    android:src="@drawable/schedule"
                     android:textSize="@dimen/_15ssp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -56,16 +56,19 @@
                     android:text="@string/app_name"
                     android:textSize="@dimen/_15ssp"
                     android:textStyle="bold"
+                    android:layout_marginStart="@dimen/_5sdp"
 
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/tvTitle"
-                    app:layout_constraintTop_toTopOf="@id/tvTitle" />
+                    app:layout_constraintTop_toTopOf="@id/tvTitle"
+                    app:layout_constraintBottom_toBottomOf="@id/tvTitle"/>
 
                 <LinearLayout
                     android:id="@+id/bgLocation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:visibility="visible"
                     app:layout_constraintTop_toBottomOf="@id/tvScheduleName">
 
@@ -73,7 +76,7 @@
                         android:id="@+id/tvLatitude"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Latitude: "
+                        android:text="Vĩ độ: "
                         android:textStyle="normal"
 
                         />
@@ -90,7 +93,7 @@
                         android:id="@+id/tvLongitude"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Longitude: "
+                        android:text="Kinh độ: "
                         android:textStyle="normal" />
 
                     <TextView
@@ -108,7 +111,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
-                    android:text="Address: "
+                    android:text="Địa chỉ: "
                     android:textStyle="italic"
 
                     app:layout_constraintTop_toBottomOf="@id/bgLocation" />
@@ -152,7 +155,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_10sdp"
-                android:text="Confirm"
+                android:text="Xác nhận"
                 android:textAllCaps="true"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"

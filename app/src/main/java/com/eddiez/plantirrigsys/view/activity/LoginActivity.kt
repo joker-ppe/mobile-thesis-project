@@ -35,6 +35,7 @@ class LoginActivity : BaseActivity() {
 
             if (result.resultCode != Activity.RESULT_CANCELED) {
                 binding.spinKit.visibility = View.VISIBLE
+                binding.btnSignIn.visibility = View.INVISIBLE
                 // There are no request codes
                 val data: Intent? = result.data
 
@@ -54,6 +55,9 @@ class LoginActivity : BaseActivity() {
                 }
             } else {
                 binding.spinKit.visibility = View.GONE
+                binding.btnSignIn.visibility = View.VISIBLE
+
+                Log.d(TAG, "User cancelled: " + result.resultCode)
             }
         }
 
@@ -82,6 +86,8 @@ class LoginActivity : BaseActivity() {
                     userViewModel.login(MyApplication.getApiKey(), userData)
                 }
 
+            } else {
+                Log.e(TAG, it.exception!!.message.toString())
             }
         }
     }
@@ -92,11 +98,16 @@ class LoginActivity : BaseActivity() {
         setContentView(binding.root)
 
         binding.spinKit.visibility = View.GONE
+        binding.btnSignIn.visibility = View.VISIBLE
 
         auth = FirebaseAuth.getInstance()
 
         oneTapClient = Identity.getSignInClient(this)
-        signInRequest = BeginSignInRequest.builder().setGoogleIdTokenRequestOptions(
+        signInRequest = BeginSignInRequest.builder()
+//            .setPasswordRequestOptions(BeginSignInRequest.PasswordRequestOptions.builder()
+//                .setSupported(true)
+//                .build())
+            .setGoogleIdTokenRequestOptions(
             BeginSignInRequest.GoogleIdTokenRequestOptions.builder().setSupported(true)
                 // Your server's client ID, not your Android client ID.
                 .setServerClientId(getString(R.string.web_client_id))

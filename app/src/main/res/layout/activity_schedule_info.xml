@@ -23,153 +23,46 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="@dimen/_20sdp">
+            android:layout_height="match_parent">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imgSchedule"
-                android:layout_width="@dimen/_50sdp"
-                android:layout_height="@dimen/_50sdp"
-                android:src="@drawable/image_default"
-                android:visibility="gone"
-                app:civ_border_color="#000000"
-                app:civ_border_width="1dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tvScheduleName"
-                android:layout_width="0dp"
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:text="@string/app_name"
-                android:textSize="@dimen/_15ssp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@id/imgSchedule"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/imgSchedule"
-                app:layout_constraintTop_toTopOf="@id/imgSchedule" />
-
-            <LinearLayout
-                android:id="@+id/bgDateRange"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:background="@drawable/textview_range_border"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingStart="@dimen/_15sdp"
-                android:paddingTop="@dimen/_7sdp"
-                android:paddingEnd="@dimen/_15sdp"
-                android:paddingBottom="@dimen/_7sdp"
-
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_20sdp"
-
-                    android:src="@drawable/schedule" />
-
-                <TextView
-                    android:id="@+id/tvDateRange"
+                app:layout_constraintTop_toTopOf="parent"
+                >
+                <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:text="Jun 12 - 18 Jun"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_12ssp"
-                    android:textStyle="normal" />
-            </LinearLayout>
-
+                    android:text="Lịch"
+                    />
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nhật ký"
+                    />
+            </com.google.android.material.tabs.TabLayout>
 
             <FrameLayout
-                android:id="@+id/bgTitleContainer"
+                android:id="@+id/fragment_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:background="@android:color/white"
-                android:elevation="@dimen/_10sdp"
-                android:paddingTop="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_5sdp"
-                app:layout_constraintTop_toBottomOf="@id/bgDateRange">
+                android:layout_height="0dp"
 
-                <include
-                    android:id="@+id/titlesContainer"
-                    layout="@layout/calendar_day_titles_container" />
-            </FrameLayout>
-
-            <TextView
-                android:id="@+id/tvScheduleMonth"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:gravity="center"
-                android:text="2024"
-                android:textSize="@dimen/_12ssp"
-                android:textStyle="bold"
-
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/bgTitleContainer" />
-
-            <com.kizitonwose.calendar.view.CalendarView
-                android:id="@+id/calendarView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                app:cv_dayViewResource="@layout/calendar_day_layout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvScheduleMonth" />
-
-            <View
-                android:id="@+id/line"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_1sdp"
-
-                android:layout_marginTop="@dimen/_10sdp"
-                android:background="@color/white"
-                android:elevation="@dimen/_1sdp"
-
-                app:layout_constraintTop_toBottomOf="@id/calendarView" />
-
-            <TextView
-                android:id="@+id/tvDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:gravity="start"
-                android:text=""
-                android:layout_marginStart="@dimen/_10sdp"
-                android:textSize="@dimen/_12ssp"
-                android:textStyle="bold"
-
-                app:layout_constraintTop_toBottomOf="@id/line"
-                />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvSlots"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvDate" />
+                app:layout_constraintTop_toBottomOf="@id/tabLayout"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

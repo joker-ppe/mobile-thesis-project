@@ -7,16 +7,56 @@
     android:background="@color/white"
     tools:context=".view.activity.LoginActivity">
 
-    <com.google.android.gms.common.SignInButton
+    <ImageView
+        android:id="@+id/imgBg"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:src="@drawable/login_bg"
+
+        app:layout_constraintDimensionRatio="1.5:1"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imgIcon"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:src="@mipmap/ic_launcher_foreground"
+        app:civ_border_width="@dimen/_1sdp"
+        app:civ_border_color="#007444"
+
+        app:layout_constraintBottom_toTopOf="@id/btnSignIn"
+        app:layout_constraintEnd_toStartOf="@id/tvAppName"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imgBg" />
+
+    <TextView
+        android:id="@+id/tvAppName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:textSize="@dimen/_20ssp"
+        android:textColor="#007444"
+        android:textStyle="bold"
+
+        app:layout_constraintBottom_toBottomOf="@id/imgIcon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imgIcon"
+        app:layout_constraintTop_toTopOf="@id/imgIcon" />
+
+    <com.shobhitpuri.custombuttons.GoogleSignInButton
         android:id="@+id/btnSignIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Đăng nhập bằng tài khoản Google"
+        app:isDarkTheme="true"
+        android:layout_marginBottom="@dimen/_60sdp"
 
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+         />
 
     <com.github.ybq.android.spinkit.SpinKitView
         android:id="@+id/spin_kit"
@@ -24,13 +64,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:visibility="visible"
+        android:layout_marginBottom="@dimen/_10sdp"
         app:SpinKit_Color="?android:colorPrimary"
-        android:layout_marginBottom="@dimen/_20sdp"
 
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
-    
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -293,7 +293,7 @@ class HomeFragment : BaseFragment() {
             // Remove cabinet
             userViewModel.connectedCabinet.value?.let { connectedCabinet ->
                 val msg =
-                    "Are you sure to remove cabinet <strong>${connectedCabinet.name}</strong>?"
+                    "Bạn có chắc chắn muốn ngắt kết nối tủ <strong>${connectedCabinet.name}</strong> không?"
 
                 MaterialAlertDialogBuilder(requireContext())
                     .setTitle(Html.fromHtml(msg, Html.FROM_HTML_MODE_COMPACT))
@@ -346,10 +346,10 @@ class HomeFragment : BaseFragment() {
             var message = ""
             var action = ""
             if (isWatering) {
-                message = "Are you sure to stop watering soon?"
+                message = "Bạn có chắc chắn muốn ngừng tưới nước sớm không??"
                 action = "STOP"
             } else {
-                message = "Are you sure to start watering soon?"
+                message = "Bạn có chắc chắn muốn bắt đầu tưới nước sớm không??"
                 action = "START"
             }
 
@@ -459,9 +459,9 @@ class HomeFragment : BaseFragment() {
             Log.d("HomeFragment", "name: ${cabinetDataModel.name}")
 
 
-            val msg = "<strong>Name</strong>: ${cabinetDataModel.name}<br>" +
-                    "<strong>MAC Address</strong>: ${cabinetDataModel.macAddress}<br>" +
-                    "<strong>Serial Number</strong>: ${cabinetDataModel.seriNumber}"
+            val msg = "<strong>Tên</strong>: ${cabinetDataModel.name}<br>" +
+                    "<strong>Địa chỉ MAC</strong>: ${cabinetDataModel.macAddress}<br>" +
+                    "<strong>Số hiệu</strong>: ${cabinetDataModel.seriNumber}"
 
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle(resources.getString(R.string.title_dialog_connect_cabin))
@@ -579,8 +579,8 @@ class HomeFragment : BaseFragment() {
                     )
 
                     binding.tvProgress.text =
-                        "${messageData.completeDays}/${messageData.totalDays} days - $percentCompleteDays%\n" +
-                                "${messageData.completeSlots}/${messageData.totalSlots} slots - $percentCompleteSlots%"
+                        "${messageData.completeDays}/${messageData.totalDays} ngày - $percentCompleteDays%\n" +
+                                "${messageData.completeSlots}/${messageData.totalSlots} lần - $percentCompleteSlots%"
 
                     if (messageData.allowAction == true) {
                         binding.imgActionSlot.visibility = View.VISIBLE
@@ -601,7 +601,7 @@ class HomeFragment : BaseFragment() {
                             percent = 100
                         }
                         binding.tvStatus.text =
-                            "Watering: $percent%\nWill end at: ${messageData.endTime}"
+                            "Đang tưới: $percent%\nKết thúc lúc: ${messageData.endTime}"
 
                         binding.imgActionSlot.setImageResource(R.drawable.stop)
 
@@ -616,11 +616,11 @@ class HomeFragment : BaseFragment() {
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    binding.tvStatus.text = "Cannot get message data"
+                    binding.tvStatus.text = "Không thể lấy dữ liệu"
                     binding.imgActionSlot.visibility = View.GONE
                 }
             } else {
-                binding.tvStatus.text = "No schedule in use"
+                binding.tvStatus.text = "Chưa áp dụng lịch tưới"
                 binding.imgActionSlot.visibility = View.GONE
             }
         }
@@ -747,10 +747,10 @@ class HomeFragment : BaseFragment() {
 
         val percentSlot = Math.round(numberOfSlotsDone.toFloat() * 100 / numberOfSlots)
 
-        val day = if (item.numberOfDates > 1) "days" else "day"
+        val day = if (item.numberOfDates > 1) "ngày" else "ngày"
 
         binding.tvProgress.text =
-            "$numberDateDone/${item.numberOfDates} $day - $percentDate%\n$numberOfSlotsDone/${numberOfSlots} slots - $percentSlot%"
+            "$numberDateDone/${item.numberOfDates} $day - $percentDate%\n$numberOfSlotsDone/${numberOfSlots} lần - $percentSlot%"
     }
 
     override fun onResume() {

@@ -43,7 +43,7 @@ object Utils {
     }
 
     fun formatDateToShortMonthStyle(date: LocalDate): String {
-        val format = DateTimeFormatter.ofPattern("MMM dd", Locale.getDefault())
+        val format = DateTimeFormatter.ofPattern("dd MMMM", Locale.getDefault())
         return format.format(date)
     }
 
@@ -77,7 +77,7 @@ object Utils {
                 e.printStackTrace()
                 null
             }
-            
+
         }
     }
 
