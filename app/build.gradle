@@ -27,11 +27,11 @@ android {
         applicationId "com.eddiez.plantirrigsys"
         minSdk 26
         targetSdk 34
-        versionCode 1
-        versionName "1.0.1"
+        versionCode 2
+        versionName "1.0.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        signingConfig signingConfigs.release
+//        signingConfig signingConfigs.release
     }
 
     buildFeatures {
@@ -42,7 +42,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            debuggable true
+//            debuggable true
 //            signingConfig signingConfigs.release
         }
     }
@@ -87,7 +87,7 @@ dependencies {
 
     // firebase
     // Import the Firebase BoM
-    implementation(platform('com.google.firebase:firebase-bom:32.7.4'))
+    implementation(platform('com.google.firebase:firebase-bom:32.8.0'))
 
     // When using the BoM, you don't specify versions in Firebase library dependencies
     // Add the dependency for the Firebase SDK for Google Analytics
@@ -105,8 +105,8 @@ dependencies {
     implementation 'com.github.shobhitpuri:custom-google-signin-button:2.0.0'
 
     // Retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.10.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.10.0'
 
     // coroutine
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0'
@@ -156,15 +156,13 @@ dependencies {
     // Maps SDK for Android
     implementation 'com.google.android.gms:play-services-maps:18.2.0'
     implementation 'com.google.android.gms:play-services-location:21.2.0'
-    implementation 'com.google.android.libraries.places:places:3.3.0'
+    implementation 'com.google.android.libraries.places:places:3.4.0'
 
     // rabbitmq
     implementation 'com.rabbitmq:amqp-client:5.20.0'
 
     // chart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
-
-    implementation 'ch.qos.logback:logback-classic:1.5.3'
 
     // The view calendar library
     implementation 'com.kizitonwose.calendar:view:2.5.0'

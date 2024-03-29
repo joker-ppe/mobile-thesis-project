@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/take_picture"
+        android:title="Chụp ảnh trực tiếp" />
+    <item
+        android:id="@+id/select_image"
+        android:title="Chọn ảnh từ thư viện" />
+</menu>

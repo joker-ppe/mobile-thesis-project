@@ -20,7 +20,6 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltViewModel
@@ -179,7 +178,7 @@ class UserViewModel @Inject constructor(
             val exchangeName = "cabinet.$cabinetId.temperature"
             val queueName = "user.$userId.$deviceId.temperature"
             val rabbitMqClient = RabbitMqClient()
-            runBlocking { rabbitMqClient.connect() }
+            rabbitMqClient.connect()
             rabbitMqClient.consumeMessage(exchangeName, queueName, object : OnMessageReceived {
                 override fun onMessageReceived(message: String) {
                     temperatureReceived.postValue(message.toFloatOrNull()) // Update LiveData with the new message
@@ -193,7 +192,7 @@ class UserViewModel @Inject constructor(
             val exchangeName = "cabinet.$cabinetId.humidity"
             val queueName = "user.$userId.$deviceId.humidity"
             val rabbitMqClient = RabbitMqClient()
-            runBlocking { rabbitMqClient.connect() }
+            rabbitMqClient.connect()
             rabbitMqClient.consumeMessage(exchangeName, queueName, object : OnMessageReceived {
                 override fun onMessageReceived(message: String) {
                     humidityReceived.postValue(message.toFloatOrNull()) // Update LiveData with the new message
@@ -207,7 +206,7 @@ class UserViewModel @Inject constructor(
             val exchangeName = "cabinet.$cabinetId.light"
             val queueName = "user.$userId.$deviceId.light"
             val rabbitMqClient = RabbitMqClient()
-            runBlocking { rabbitMqClient.connect() }
+            rabbitMqClient.connect()
             rabbitMqClient.consumeMessage(exchangeName, queueName, object : OnMessageReceived {
                 override fun onMessageReceived(message: String) {
                     lightReceived.postValue(message.toFloatOrNull()) // Update LiveData with the new message
@@ -221,7 +220,7 @@ class UserViewModel @Inject constructor(
             val exchangeName = "cabinet.$cabinetId.messages"
             val queueName = "user.$userId.$deviceId.messages"
             val rabbitMqClient = RabbitMqClient()
-            runBlocking { rabbitMqClient.connect() }
+            rabbitMqClient.connect()
             rabbitMqClient.consumeMessage(exchangeName, queueName, object : OnMessageReceived {
                 override fun onMessageReceived(message: String) {
                     messageReceived.postValue(message) // Update LiveData with the new message
@@ -234,7 +233,7 @@ class UserViewModel @Inject constructor(
         scope.launch {
             val exchangeName = "cabinet.$cabinetId.action"
             val rabbitMqClient = RabbitMqClient()
-            runBlocking { rabbitMqClient.connect() }
+            rabbitMqClient.connect()
             rabbitMqClient.sendMessage(exchangeName, message)
         }
     }
@@ -244,7 +243,7 @@ class UserViewModel @Inject constructor(
             val exchangeName = "cabinet.$cabinetId.action.reply"
             val queueName = "user.$userId.$deviceId.action.reply"
             val rabbitMqClient = RabbitMqClient()
-            runBlocking { rabbitMqClient.connect() }
+            rabbitMqClient.connect()
             rabbitMqClient.consumeMessage(exchangeName, queueName, object : OnMessageReceived {
                 override fun onMessageReceived(message: String) {
                     actionReceived.postValue(message) // Update LiveData with the new message

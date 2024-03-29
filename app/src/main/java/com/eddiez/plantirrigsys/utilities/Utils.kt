@@ -1,14 +1,22 @@
 package com.eddiez.plantirrigsys.utilities
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.icu.text.SimpleDateFormat
 import android.icu.util.TimeZone
+import android.net.Uri
+import android.os.Environment
+import androidx.core.content.FileProvider
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 import java.util.Locale
+import java.util.UUID
 import kotlin.math.abs
 
 object Utils {
@@ -84,5 +92,29 @@ object Utils {
     fun calculateTotalSeconds(localTime1: LocalTime, localTime2: LocalTime): Long {
         val duration = Duration.between(localTime1, localTime2)
         return abs(duration.seconds)
+    }
+
+    fun bitmapToUri(bitmap: Bitmap, context: Context): Uri? {
+        // Get the external storage directory
+        val filesDir: File = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
+        // Create a file to save the bitmap
+        val imageFile = File(filesDir, "image_" + UUID.randomUUID().toString() + ".png")
+
+        var fos: FileOutputStream? = null
+        try {
+            fos = FileOutputStream(imageFile)
+            // Use the compress method on the Bitmap object to write image to the OutputStream
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
+        } catch (e: IOException) {
+            e.printStackTrace()
+        } finally {
+            try {
+                fos?.close()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
+        // Use the FileProvider method to get the Uri of the file
+        return FileProvider.getUriForFile(context, context.packageName + ".provider", imageFile)
     }
 }

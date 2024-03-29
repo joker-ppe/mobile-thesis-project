@@ -17,6 +17,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.text.HtmlCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -27,6 +28,7 @@ import com.eddiez.plantirrigsys.dataModel.SlotDataModel
 import com.eddiez.plantirrigsys.databinding.ActivityCreateScheduleBinding
 import com.eddiez.plantirrigsys.utilities.AppConstants
 import com.eddiez.plantirrigsys.utilities.FirebaseStorageHelper
+import com.eddiez.plantirrigsys.utilities.Utils
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -62,6 +64,26 @@ class CreateScheduleActivity : BaseActivity() {
             }
         }
 
+    private val takePicture =
+        registerForActivityResult(ActivityResultContracts.TakePicturePreview()) { bitmap ->
+            // Callback is invoked after the user selects a media item or closes the
+            // photo picker.
+            if (bitmap != null) {
+                Log.d("Camera", "Picture taken")
+
+                val uri = Utils.bitmapToUri(bitmap, this)
+
+                Glide.with(this)
+                    .load(uri)
+                    .into(binding.imgData)
+
+                // Save the selected image URI
+                selectedImageUri = uri
+            } else {
+                Log.d("Camera", "No picture taken")
+            }
+        }
+
     private val mapsResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -90,7 +112,8 @@ class CreateScheduleActivity : BaseActivity() {
 
                     val title = binding.filledTextFieldTitle.editText?.text.toString()
                     if (title.isEmpty()) {
-                        Toast.makeText(this, "Vui lòng điền tên lịch tưới", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Vui lòng điền tên lịch tưới", Toast.LENGTH_SHORT)
+                            .show()
 
                         binding.cbPublic.isChecked = false
                     } else {
@@ -214,7 +237,26 @@ class CreateScheduleActivity : BaseActivity() {
 
         binding.imgData.setOnClickListener {
             // Registers a photo picker activity launcher in single-select mode.
-            pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+            val popupMenu = PopupMenu(this, binding.bgImgData) // 'view' is the anchor view for the popup menu
+            popupMenu.menuInflater.inflate(R.menu.popup_image, popupMenu.menu) // 'R.menu.popup_menu' is the menu resource file
+
+            popupMenu.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.take_picture -> {
+                        // User selected Option 1
+                        takePicture.launch(null)
+                        true
+                    }
+                    R.id.select_image -> {
+                        // User selected Option 2
+                        pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                        true
+                    }
+                    else -> false
+                }
+            }
+
+            popupMenu.show()
         }
 
         if (schedule != null) {
@@ -338,26 +380,27 @@ class CreateScheduleActivity : BaseActivity() {
             binding.tvDelete.visibility = View.GONE
         }
 
-        binding.spinnerNumberSlots.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                val value = parent?.getItemAtPosition(position).toString().toIntOrNull()
-                if (value != null) {
-                    // xóa hết các view cũ
-                    binding.bgSlots.removeAllViews()
-                    // tạo layout mới
-                    createLayoutSlots(value, null)
+        binding.spinnerNumberSlots.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val value = parent?.getItemAtPosition(position).toString().toIntOrNull()
+                    if (value != null) {
+                        // xóa hết các view cũ
+                        binding.bgSlots.removeAllViews()
+                        // tạo layout mới
+                        createLayoutSlots(value, null)
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    // Không làm gì ở đây
                 }
             }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Không làm gì ở đây
-            }
-        }
 
 //        binding.filledTextFieldNumberSlots.editText?.addTextChangedListener(object : TextWatcher {
 //            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {

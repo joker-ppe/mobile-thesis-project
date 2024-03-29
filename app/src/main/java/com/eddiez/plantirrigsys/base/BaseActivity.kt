@@ -1,6 +1,8 @@
 package com.eddiez.plantirrigsys.base
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -23,8 +25,11 @@ open class BaseActivity : AppCompatActivity() {
 
     val userViewModel: UserViewModel by viewModels()
     val scheduleViewModel: ScheduleViewModel by viewModels()
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         scheduleViewModel.accessTokenExpired.observe(this) {
             if (it) {

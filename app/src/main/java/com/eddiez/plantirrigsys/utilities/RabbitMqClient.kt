@@ -17,29 +17,33 @@ class RabbitMqClient {
     private var channel: Channel? = null
 
 
-    fun connect() {
-        val factory = ConnectionFactory()
-        factory.host = host
-        factory.username = username
-        factory.password = password
+    suspend fun connect() {
+        try {
+            val factory = ConnectionFactory()
+            factory.host = host
+            factory.username = username
+            factory.password = password
 
-        connection = factory.newConnection()
+            connection = factory.newConnection()
 
-        if (connection?.isOpen == true) {
-            Log.d("RabbitMqClient", "Connected to RabbitMQ")
-            channel = connection?.createChannel()
-            if (channel?.isOpen == true) {
-                Log.d("RabbitMqClient", "Channel created")
+            if (connection?.isOpen == true) {
+                Log.d("RabbitMqClient", "Connected to RabbitMQ")
+                channel = connection?.createChannel()
+                if (channel?.isOpen == true) {
+                    Log.d("RabbitMqClient", "Channel created")
+                } else {
+                    Log.d("RabbitMqClient", "Failed to create channel")
+                }
             } else {
-                Log.d("RabbitMqClient", "Failed to create channel")
+                // Handle connection error
+                Log.d("RabbitMqClient", "Failed to connect to RabbitMQ")
             }
-        } else {
-            // Handle connection error
-            Log.d("RabbitMqClient", "Failed to connect to RabbitMQ")
+        } catch (e: Exception) {
+            Log.e("RabbitMqClient", "Failed to connect to RabbitMQ", e)
         }
     }
 
-    fun sendMessage(exchangeName: String, message: String) {
+     fun sendMessage(exchangeName: String, message: String) {
         if (channel?.isOpen == false) {
             Log.d("RabbitMqClient", "Channel is closed")
             return
@@ -55,7 +59,7 @@ class RabbitMqClient {
         }
     }
 
-    fun consumeMessage(exchangeName: String,queueName: String, listener: OnMessageReceived) {
+    fun consumeMessage(exchangeName: String, queueName: String, listener: OnMessageReceived) {
         if (channel?.isOpen == false) {
             Log.d("RabbitMqClient", "Channel is closed")
             return
@@ -85,12 +89,20 @@ class RabbitMqClient {
 
             // Start consuming messages
             channel?.basicConsume(queueName, true, consumer)
-            Log.d("RabbitMqClient", "Started consuming messages from exchange '$exchangeName' queue '$queueName'")
+            Log.d(
+                "RabbitMqClient",
+                "Started consuming messages from exchange '$exchangeName' queue '$queueName'"
+            )
 
             // Keep the connection open until the application finishes
-            while (true) { }
+            while (true) {
+            }
         } catch (e: Exception) {
-            Log.e("RabbitMqClient", "Failed to consume messages from exchange '$exchangeName' queue $queueName", e)
+            Log.e(
+                "RabbitMqClient",
+                "Failed to consume messages from exchange '$exchangeName' queue $queueName",
+                e
+            )
         }
     }
 
