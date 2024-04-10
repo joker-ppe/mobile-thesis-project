@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#CDC3FF"/> <!-- Màu nền -->
+    <corners
+        android:topLeftRadius="@dimen/_15sdp"
+        android:bottomLeftRadius="@dimen/_15sdp"
+        android:bottomRightRadius="@dimen/_15sdp"
+        /> <!-- Bán kính góc bo tròn -->
+    <!-- Các tùy chọn khác như padding có thể được thêm vào đây -->
+</shape>

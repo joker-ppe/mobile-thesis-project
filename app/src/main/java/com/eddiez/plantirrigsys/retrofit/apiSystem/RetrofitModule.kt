@@ -1,4 +1,4 @@
-package com.eddiez.plantirrigsys.retrofit
+package com.eddiez.plantirrigsys.retrofit.apiSystem
 
 import dagger.Module
 import dagger.Provides

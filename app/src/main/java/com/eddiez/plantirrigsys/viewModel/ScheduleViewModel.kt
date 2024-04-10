@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.eddiez.plantirrigsys.dataModel.ScheduleDataModel
-import com.eddiez.plantirrigsys.retrofit.DataRepository
+import com.eddiez.plantirrigsys.retrofit.apiSystem.DataRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

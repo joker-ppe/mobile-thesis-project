@@ -1,4 +1,4 @@
-package com.eddiez.plantirrigsys.retrofit
+package com.eddiez.plantirrigsys.retrofit.apiSystem
 
 import com.eddiez.plantirrigsys.dataModel.CabinetDataModel
 import com.eddiez.plantirrigsys.dataModel.LoginDataModel

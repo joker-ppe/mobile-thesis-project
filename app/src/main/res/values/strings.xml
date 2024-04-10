@@ -4,7 +4,7 @@
     // debug :920429838904-nvsqir3e1thq7g613ghhmfmhl1grkkei.apps.googleusercontent.com
     <string name="web_client_id">920429838904-nvsqir3e1thq7g613ghhmfmhl1grkkei.apps.googleusercontent.com</string>
     // release
-<!--    <string name="web_client_id">920429838904-ovhiv3n5p145h97542sqk1jhr62ge265.apps.googleusercontent.com</string>-->
+    <!--    <string name="web_client_id">920429838904-ovhiv3n5p145h97542sqk1jhr62ge265.apps.googleusercontent.com</string>-->
 
 
     <string name="text_label_home">Màn hình chính</string>
@@ -29,6 +29,7 @@
     <string name="title_activity_maps">MapsActivity</string>
 
     <string name="api_key">InVMJN87fOOSvcI15qYnTRDj2YYe8hxH</string>
+    <string name="api_chat_key">pHqCuCYnx*^%CTeJLnG6YDp@</string>
 
     <string-array name="number_slot">
         <item>1</item>

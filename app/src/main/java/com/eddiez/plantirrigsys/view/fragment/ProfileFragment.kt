@@ -1,14 +1,17 @@
 package com.eddiez.plantirrigsys.view.fragment
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.eddiez.plantirrigsys.R
 import com.eddiez.plantirrigsys.base.BaseFragment
 import com.eddiez.plantirrigsys.databinding.FragmentProfileBinding
+import com.eddiez.plantirrigsys.view.activity.ChatActivity
 import com.eddiez.plantirrigsys.view.activity.LoginActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -27,7 +30,7 @@ class ProfileFragment : BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentProfileBinding.inflate(layoutInflater)
 
         return binding.root
@@ -56,6 +59,28 @@ class ProfileFragment : BaseFragment() {
                         }
                     }
                     .show()
+            }
+        }
+
+        binding.bgChatAI.setOnClickListener {
+            val intend = Intent(requireContext(), ChatActivity::class.java)
+            startActivity(intend)
+        }
+
+        observeData()
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun observeData() {
+        userViewModel.userData.observe(viewLifecycleOwner) {
+            it?.let {
+                binding.tvName.text = it.firstName + " " + it.lastName
+                binding.tvEmail.text = it.email
+
+                Glide.with(requireContext())
+                    .load(it.photoUrl)
+                    .placeholder(R.drawable.avatar_ai)
+                    .into(binding.imgAvatar)
             }
         }
     }

@@ -14,8 +14,13 @@ class MyApplication : Application() {
 
     companion object {
         private lateinit var apiKey: String
+        private lateinit var apiChatKey: String
         fun getApiKey(): String {
             return apiKey
+        }
+
+        fun getApiChatKey(): String {
+            return apiChatKey
         }
 
         @SuppressLint("HardwareIds")
@@ -39,6 +44,7 @@ class MyApplication : Application() {
             .build()
 
         apiKey = resources.getString(R.string.api_key)
+        apiChatKey = resources.getString(R.string.api_chat_key)
 
 //        Fonty
 //            .context(this)

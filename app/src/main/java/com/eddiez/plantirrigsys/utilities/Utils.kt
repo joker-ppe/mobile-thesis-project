@@ -7,6 +7,7 @@ import android.icu.util.TimeZone
 import android.net.Uri
 import android.os.Environment
 import androidx.core.content.FileProvider
+import com.eddiez.plantirrigsys.dataModel.ChatMessageDataModel
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -116,5 +117,15 @@ object Utils {
         }
         // Use the FileProvider method to get the Uri of the file
         return FileProvider.getUriForFile(context, context.packageName + ".provider", imageFile)
+    }
+
+    fun parseHistoryChat(history: List<List<Any>>): MutableList<ChatMessageDataModel> {
+        // Parse data
+        val result = mutableListOf<ChatMessageDataModel>()
+        for (item in history) {
+            result.add(ChatMessageDataModel(item[0].toString(), true))
+            result.add(ChatMessageDataModel(item[1].toString(), false))
+        }
+        return result
     }
 }

@@ -19,6 +19,9 @@
         android:theme="@style/Theme.PlantIrrigSys"
         tools:targetApi="s">
         <activity
+            android:name=".view.activity.ChatActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.activity.ScheduleInfoActivity"
             android:exported="false" />
         <activity
@@ -60,6 +63,7 @@
         <activity
             android:name=".view.activity.MainActivity"
             android:exported="true" />
+
         <service
             android:name="com.google.android.gms.metadata.ModuleDependencies"
             android:enabled="false"

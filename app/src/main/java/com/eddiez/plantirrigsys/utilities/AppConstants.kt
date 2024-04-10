@@ -23,4 +23,6 @@ object AppConstants {
 
     const val ERROR_LOGIN = "Login: User not found"
     const val ERROR_QR_CODE = "ERROR_QR_CODE"
+
+    const val BOT_THINKING = "BOT_THINKING_!#$)(*&^%$#@!@#$%^&*()_+"
 }
