@@ -12,6 +12,7 @@ data class MessageDataModel(
     val endTime: String?,
     val slotStatus: String?,
     val completeSlots: Int?,
+    val completeRate: Int?,
     val totalSlots: Int?,
     val allowAction: Boolean?,
 )

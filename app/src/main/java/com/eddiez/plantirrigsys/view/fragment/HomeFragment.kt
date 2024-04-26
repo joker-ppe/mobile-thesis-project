@@ -32,7 +32,6 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
-import java.time.LocalTime
 
 class HomeFragment : BaseFragment() {
 
@@ -588,18 +587,21 @@ class HomeFragment : BaseFragment() {
                         binding.imgActionSlot.visibility = View.GONE
                     }
                     if (messageData.slotStatus == "IN_PROGRESS") {
-                        val doneSecond = Utils.calculateTotalSeconds(
-                            Utils.convertStringToTime(messageData.startTime!!)!!,
-                            LocalTime.now()
-                        )
-                        val totalSecond = Utils.calculateTotalSeconds(
-                            Utils.convertStringToTime(messageData.startTime)!!,
-                            Utils.convertStringToTime(messageData.endTime!!)!!
-                        )
-                        var percent = Math.round(doneSecond.toFloat() * 100 / totalSecond)
-                        if (percent > 100) {
-                            percent = 100
-                        }
+//                        val doneSecond = Utils.calculateTotalSeconds(
+//                            Utils.convertStringToTime(messageData.startTime!!)!!,
+//                            LocalTime.now()
+//                        )
+//                        val totalSecond = Utils.calculateTotalSeconds(
+//                            Utils.convertStringToTime(messageData.startTime)!!,
+//                            Utils.convertStringToTime(messageData.endTime!!)!!
+//                        )
+//                        var percent = Math.round(doneSecond.toFloat() * 100 / totalSecond)
+//                        if (percent > 100) {
+//                            percent = 100
+//                        }
+
+                        val percent = messageData.completeRate!!
+
                         binding.tvStatus.text =
                             "Đang tưới: $percent%\nKết thúc lúc: ${messageData.endTime}"
 
@@ -608,7 +610,7 @@ class HomeFragment : BaseFragment() {
                         isWatering = true
                     } else {
                         binding.tvStatus.text =
-                            "Next slot:\n${messageData.startTime} - ${messageData.day}"
+                            "Lượt tiếp theo:\n${messageData.startTime} - ${messageData.day}"
 
                         binding.imgActionSlot.setImageResource(R.drawable.play)
 
