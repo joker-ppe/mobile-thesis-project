@@ -441,6 +441,8 @@ class HomeFragment : BaseFragment() {
         userViewModel.accessToken.observe(viewLifecycleOwner) {
             if (it != null) {
                 userViewModel.getProfile(it)
+
+                scheduleViewModel.getScheduleInUse(it)
             } else {
                 Toast.makeText(requireContext(), "Access token is empty", Toast.LENGTH_SHORT).show()
             }

@@ -358,7 +358,7 @@ class CreateScheduleActivity : BaseActivity() {
                 binding.ftfTemperatureThreshold.visibility = View.GONE
             }
 
-            createLayoutSlots(0, schedule.slots)
+//            createLayoutSlots(0, schedule.slots)
         } else {
             binding.ftfTemperatureThreshold.visibility = View.GONE
             binding.ftfMoistureThreshold.visibility = View.GONE
@@ -392,8 +392,15 @@ class CreateScheduleActivity : BaseActivity() {
                     if (value != null) {
                         // xóa hết các view cũ
                         binding.bgSlots.removeAllViews()
+
+                    if (schedule?.slots?.size == value) {
+                            createLayoutSlots(0, schedule?.slots)
+                        } else {
+                            createLayoutSlots(value, null)
+                        }
+
                         // tạo layout mới
-                        createLayoutSlots(value, null)
+//                        createLayoutSlots(value, null)
                     }
                 }
 
