@@ -12,7 +12,9 @@ import com.eddiez.plantirrigsys.R
 import com.eddiez.plantirrigsys.base.BaseFragment
 import com.eddiez.plantirrigsys.databinding.FragmentProfileBinding
 import com.eddiez.plantirrigsys.view.activity.ChatActivity
+import com.eddiez.plantirrigsys.view.activity.EditProfileActivity
 import com.eddiez.plantirrigsys.view.activity.LoginActivity
+import com.eddiez.plantirrigsys.view.activity.NotificationActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 /**
@@ -39,7 +41,7 @@ class ProfileFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnLogout.setOnClickListener {
+        binding.bgLogout.setOnClickListener {
             context?.let { context ->
                 MaterialAlertDialogBuilder(context)
                     .setTitle(resources.getString(R.string.title_dialog_logout))
@@ -67,6 +69,16 @@ class ProfileFragment : BaseFragment() {
             startActivity(intend)
         }
 
+        binding.bgNotification.setOnClickListener {
+            val intend = Intent(requireContext(), NotificationActivity::class.java)
+            startActivity(intend)
+        }
+
+        binding.bgEditProfile.setOnClickListener {
+            val intend = Intent(requireContext(), EditProfileActivity::class.java)
+            startActivity(intend)
+        }
+
         observeData()
     }
 
@@ -74,7 +86,7 @@ class ProfileFragment : BaseFragment() {
     private fun observeData() {
         userViewModel.userData.observe(viewLifecycleOwner) {
             it?.let {
-                binding.tvName.text = it.firstName + " " + it.lastName
+                binding.tvName.text = (it.firstName + " " + it.lastName).replace("null", "").trim()
                 binding.tvEmail.text = it.email
 
                 Glide.with(requireContext())
@@ -82,6 +94,13 @@ class ProfileFragment : BaseFragment() {
                     .placeholder(R.drawable.avatar_ai)
                     .into(binding.imgAvatar)
             }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        userViewModel.accessToken.value?.let {
+            userViewModel.getProfile(it)
         }
     }
 

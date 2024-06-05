@@ -12,6 +12,7 @@ import com.eddiez.plantirrigsys.dataModel.UserDataModel
 import com.eddiez.plantirrigsys.retrofit.apiSystem.DataRepository
 import com.eddiez.plantirrigsys.utilities.AppConstants
 import com.eddiez.plantirrigsys.utilities.DataStoreHelper
+import com.eddiez.plantirrigsys.utilities.FCMHelper
 import com.eddiez.plantirrigsys.utilities.OnMessageReceived
 import com.eddiez.plantirrigsys.utilities.RabbitMqClient
 import com.google.gson.Gson
@@ -19,6 +20,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -148,6 +150,27 @@ class UserViewModel @Inject constructor(
             }
         } catch (e: Exception) {
             Log.e("Error", e.message.toString())
+        }
+    }
+
+    fun updateProfile(accessToken: String, data: UserDataModel) = viewModelScope.launch {
+        try {
+            val response = dataRepository.updateProfile(accessToken, data)
+            if (response.isSuccessful && response.body() != null) {
+                // Handle successful response
+                userData.postValue(response.body())
+            } else {
+                // Handle API error response
+                errorMessage.postValue(
+                    "${
+                        response.errorBody()?.string()
+                    }"
+                )
+            }
+        } catch (e: Exception) {
+            // Handle other exceptions like network errors, etc.
+            // Post other exceptions like network errors
+            errorMessage.postValue(e.message ?: "An unknown error occurred")
         }
     }
 
@@ -301,6 +324,23 @@ class UserViewModel @Inject constructor(
             if (data != null) {
                 dataStoreHelper.saveData(AppConstants.ACCESS_TOKEN, data.accessToken)
 
+                var topic = dataStoreHelper.readData(AppConstants.TOPIC_FIREBASE, "").first().toString()
+                if (topic.isNotEmpty()) {
+                    FCMHelper.unsubscribeFromTopic(topic) {}
+                }
+
+                topic = "user.${data.email?.replace('@','.')}"
+                FCMHelper.subscribeToTopic(topic) {
+                    val coroutineScope = CoroutineScope(Dispatchers.IO)
+                    coroutineScope.launch {
+                        dataStoreHelper.saveData(AppConstants.TOPIC_FIREBASE, topic)
+
+                        val checkTopic = dataStoreHelper.readData(AppConstants.TOPIC_FIREBASE, "").first().toString()
+                        Log.d("Topic", checkTopic)
+                    }
+                }
+
+
 //                accessToken.postValue(data.accessToken)
 //                val gson = Gson()
 //                val dataJson = gson.toJson(data)
@@ -328,7 +368,14 @@ class UserViewModel @Inject constructor(
 
     fun clearDataLocal(onComplete: () -> Unit) {
         viewModelScope.launch {
+
+            val topic = dataStoreHelper.readData(AppConstants.TOPIC_FIREBASE, "").first().toString()
+            if (topic.isNotEmpty()) {
+                FCMHelper.unsubscribeFromTopic(topic, {})
+            }
+
             dataStoreHelper.clearData()
+
             onComplete() // Called after clearData() completes
         }
     }

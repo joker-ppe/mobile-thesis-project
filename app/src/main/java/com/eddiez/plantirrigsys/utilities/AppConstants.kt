@@ -25,4 +25,6 @@ object AppConstants {
     const val ERROR_QR_CODE = "ERROR_QR_CODE"
 
     const val BOT_THINKING = "BOT_THINKING_!#$)(*&^%$#@!@#$%^&*()_+"
+
+    const val TOPIC_FIREBASE = "TOPIC_FIREBASE"
 }

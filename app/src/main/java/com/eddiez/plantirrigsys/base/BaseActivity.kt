@@ -82,6 +82,8 @@ open class BaseActivity : AppCompatActivity() {
                 }
             }
         }
+
+        userViewModel.userData.observe(this){}
     }
 
     override fun onResume() {

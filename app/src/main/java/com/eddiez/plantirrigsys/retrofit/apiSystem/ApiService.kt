@@ -2,6 +2,7 @@ package com.eddiez.plantirrigsys.retrofit.apiSystem
 
 import com.eddiez.plantirrigsys.dataModel.CabinetDataModel
 import com.eddiez.plantirrigsys.dataModel.LoginDataModel
+import com.eddiez.plantirrigsys.dataModel.NotificationDataModel
 import com.eddiez.plantirrigsys.dataModel.RSADataModel
 import com.eddiez.plantirrigsys.dataModel.ScheduleDataModel
 import com.eddiez.plantirrigsys.dataModel.UserDataModel
@@ -24,6 +25,12 @@ interface ApiService {
 
     @GET("users/profile")
     suspend fun getProfile(@Header("Authorization") authHeader: String): Response<UserDataModel>
+
+    @PATCH("users/profile")
+    suspend fun updateProfile(
+        @Header("Authorization") authHeader: String,
+        @Body data: UserDataModel
+    ): Response<UserDataModel>
 
     @GET("devices/id/{id}")
     suspend fun getCabinet(@Path("id") id: Int, @Query("apiKey") apiKey: String): Response<CabinetDataModel>
@@ -100,4 +107,7 @@ interface ApiService {
         @Header("Authorization") authHeader: String,
         @Path("id") id: Int
     ): Response<ScheduleDataModel>
+
+    @GET("notification")
+    suspend fun getNotification(@Header("Authorization") authHeader: String): Response<List<NotificationDataModel>>
 }

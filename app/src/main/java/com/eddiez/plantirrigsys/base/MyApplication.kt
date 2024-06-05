@@ -4,8 +4,11 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.provider.Settings.Secure
+import android.util.Log
 import com.eddiez.plantirrigsys.R
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.libraries.places.api.Places
+import com.google.firebase.messaging.FirebaseMessaging
 import com.marcinorlowski.fonty.Fonty
 import dagger.hilt.android.HiltAndroidApp
 
@@ -52,6 +55,21 @@ class MyApplication : Application() {
 //            .italicTypeface("rubik_italic.ttf")
 //            .boldTypeface("rubik_bold.ttf")
 //            .build()
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w("FCM", "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            // Log and toast
+            val msg = "FCM Token: $token"
+            Log.d("FCM", msg)
+//            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+        })
     }
 
 

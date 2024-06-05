@@ -9,6 +9,8 @@ class DataRepository @Inject constructor(private val apiService: ApiService) {
     suspend fun register(apiKey: String, data: UserDataModel) = apiService.register(apiKey, data)
     suspend fun login(apiKey: String, data: LoginDataModel) = apiService.login(apiKey, data)
     suspend fun getProfile(accessToken: String) = apiService.getProfile("Bearer $accessToken")
+    suspend fun updateProfile(accessToken: String, data: UserDataModel) =
+        apiService.updateProfile("Bearer $accessToken", data)
     suspend fun getCabinet(apiKey: String, id: Int) = apiService.getCabinet(id, apiKey)
     suspend fun removeCabinet(accessToken: String) =
         apiService.removeCabinet("Bearer $accessToken")
@@ -49,4 +51,6 @@ class DataRepository @Inject constructor(private val apiService: ApiService) {
 
     suspend fun increaseNumberOfCopies(accessToken: String, id: Int) =
         apiService.increaseNumberOfCopies("Bearer $accessToken", id)
+
+    suspend fun getNotification(accessToken: String) = apiService.getNotification("Bearer $accessToken")
 }

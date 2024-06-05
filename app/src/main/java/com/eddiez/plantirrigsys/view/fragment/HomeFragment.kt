@@ -396,7 +396,7 @@ class HomeFragment : BaseFragment() {
     private fun observeViewModels() {
         userViewModel.userData.observe(viewLifecycleOwner) { it ->
             // Use fullName here
-            binding.tvName.text = it!!.firstName + " " + it.lastName
+            binding.tvName.text = (it!!.firstName + " " + it.lastName).replace("null", "").trim()
 
             if (it.deviceId != null) {
                 userViewModel.getCabinet(MyApplication.getApiKey(), it.deviceId)
@@ -411,14 +411,14 @@ class HomeFragment : BaseFragment() {
                 if (it.isEmpty()) {
                     Toast.makeText(
                         requireContext(),
-                        "No schedule to choose. Create one first",
+                        "Không có lịch có sẵn. Vui lòng tạo mới một lịch trước.",
                         Toast.LENGTH_SHORT
                     )
                         .show()
                 } else {
                     val adapter = ScheduleInUseListAdapter(requireContext(), it)
                     MaterialAlertDialogBuilder(requireContext())
-                        .setTitle("Choose a schedule")
+                        .setTitle("Chọn lịch tưới")
                         .setAdapter(adapter) { dialog, position ->
                             // 'position' is the index of the selected item
                             val selectedItem = it[position]

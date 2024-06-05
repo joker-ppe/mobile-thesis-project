@@ -4,4 +4,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="status_color">#FEF7FF</color>
     <color name="bg_date_color">#FEF7FF</color>
+    <color name="bg_item_color">#F7F5FF</color>
 </resources>

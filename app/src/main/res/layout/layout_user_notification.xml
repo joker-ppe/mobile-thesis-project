@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/_10sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/imgType"
+        android:layout_width="@dimen/_24sdp"
+        android:layout_height="@dimen/_24sdp"
+
+        android:src="@drawable/bell"
+
+        app:layout_constraintTop_toTopOf="@id/tvContent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/tvTime"
+        />
+
+    <TextView
+        android:id="@+id/tvContent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Trò chuyện với Chatbot AITrò chuyện với Chatbot AITrò chuyện với Chatbot AITrò chuyện với Chatbot AI"
+        android:textSize="@dimen/_13ssp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:textColor="@color/black"
+
+        app:layout_constraintStart_toEndOf="@id/imgType"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="10:00 AM"
+        android:textSize="@dimen/_13ssp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:textColor="@color/dark_blue"
+
+        app:layout_constraintStart_toEndOf="@id/imgType"
+        app:layout_constraintTop_toBottomOf="@id/tvContent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
