@@ -59,7 +59,11 @@ class ChatActivity : BaseActivity() {
                         )
                         //                        binding.rvChat.adapter = adapter
                     } else {
-                        ChatAdapter(mutableListOf(), it.photoUrl)
+                        val firstWelcome = ChatMessageDataModel(
+                            "Xin chào, tôi có thể giúp gì cho bạn?",
+                            false
+                        )
+                        ChatAdapter(mutableListOf(firstWelcome), it.photoUrl)
                     }
                     binding.rvChat.adapter = adapter
                     // Scroll to bottom

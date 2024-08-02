@@ -101,10 +101,10 @@ class ViewScheduleActivity : BaseActivity() {
             binding.tvDescription.text = schedule.description
 
             binding.tvScheduleDays.text = schedule.numberOfDates.toString()
-            binding.tvScheduleDaysUnit.text = if (schedule.numberOfDates!! > 1) " days" else " day"
+            binding.tvScheduleDaysUnit.text = if (schedule.numberOfDates!! > 1) " ngày" else " ngày"
 
             binding.tvSlotsNumber.text = schedule.slots?.size.toString()
-            binding.tvSlotsUnit.text = if (schedule.slots?.size!! > 1) " slots" else " slot"
+            binding.tvSlotsUnit.text = if (schedule.slots?.size!! > 1) " lần" else " lần"
 
             createLayoutSlots(schedule.slots)
 

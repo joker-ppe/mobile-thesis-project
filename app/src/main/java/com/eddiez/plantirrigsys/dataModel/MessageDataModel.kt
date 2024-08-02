@@ -4,6 +4,7 @@ data class MessageDataModel(
     val userId: Int?,
     val scheduleId: Int?,
     val dayIndex: Int?,
+    val slotsPerDay: Int?,
     val day: String?,
     val completeDays: Int?,
     val totalDays: Int?,
@@ -15,4 +16,5 @@ data class MessageDataModel(
     val completeRate: Int?,
     val totalSlots: Int?,
     val allowAction: Boolean?,
+    val showNextSlot: Boolean?,
 )

@@ -200,7 +200,7 @@ class UserViewModel @Inject constructor(
         scope.launch {
             val exchangeName = "cabinet.$cabinetId.temperature"
             val queueName = "user.$userId.$deviceId.temperature"
-            val rabbitMqClient = RabbitMqClient()
+            val rabbitMqClient = RabbitMqClient.getInstance()
             rabbitMqClient.connect()
             rabbitMqClient.consumeMessage(exchangeName, queueName, object : OnMessageReceived {
                 override fun onMessageReceived(message: String) {
@@ -214,7 +214,7 @@ class UserViewModel @Inject constructor(
         scope.launch {
             val exchangeName = "cabinet.$cabinetId.humidity"
             val queueName = "user.$userId.$deviceId.humidity"
-            val rabbitMqClient = RabbitMqClient()
+            val rabbitMqClient = RabbitMqClient.getInstance()
             rabbitMqClient.connect()
             rabbitMqClient.consumeMessage(exchangeName, queueName, object : OnMessageReceived {
                 override fun onMessageReceived(message: String) {
@@ -228,7 +228,7 @@ class UserViewModel @Inject constructor(
         scope.launch {
             val exchangeName = "cabinet.$cabinetId.light"
             val queueName = "user.$userId.$deviceId.light"
-            val rabbitMqClient = RabbitMqClient()
+            val rabbitMqClient = RabbitMqClient.getInstance()
             rabbitMqClient.connect()
             rabbitMqClient.consumeMessage(exchangeName, queueName, object : OnMessageReceived {
                 override fun onMessageReceived(message: String) {
@@ -242,7 +242,7 @@ class UserViewModel @Inject constructor(
         scope.launch {
             val exchangeName = "cabinet.$cabinetId.messages"
             val queueName = "user.$userId.$deviceId.messages"
-            val rabbitMqClient = RabbitMqClient()
+            val rabbitMqClient = RabbitMqClient.getInstance()
             rabbitMqClient.connect()
             rabbitMqClient.consumeMessage(exchangeName, queueName, object : OnMessageReceived {
                 override fun onMessageReceived(message: String) {
@@ -255,7 +255,7 @@ class UserViewModel @Inject constructor(
     fun sendActionToCabinet(cabinetId: Int, message: String) {
         scope.launch {
             val exchangeName = "cabinet.$cabinetId.action"
-            val rabbitMqClient = RabbitMqClient()
+            val rabbitMqClient = RabbitMqClient.getInstance()
             rabbitMqClient.connect()
             rabbitMqClient.sendMessage(exchangeName, message)
         }
@@ -265,7 +265,7 @@ class UserViewModel @Inject constructor(
         scope.launch {
             val exchangeName = "cabinet.$cabinetId.action.reply"
             val queueName = "user.$userId.$deviceId.action.reply"
-            val rabbitMqClient = RabbitMqClient()
+            val rabbitMqClient = RabbitMqClient.getInstance()
             rabbitMqClient.connect()
             rabbitMqClient.consumeMessage(exchangeName, queueName, object : OnMessageReceived {
                 override fun onMessageReceived(message: String) {
@@ -303,6 +303,14 @@ class UserViewModel @Inject constructor(
             if (response.isSuccessful && response.body() != null) {
                 // Handle successful response
                 Log.d("Remove Cabinet", response.body().toString())
+
+                scope.launch {
+                    // ngắt kết nối với queue rabbitmq
+                    val rabbitMqClient = RabbitMqClient.getInstance()
+                    rabbitMqClient.stopConsumingAll()
+                    rabbitMqClient.close()
+                }
+
                 connectedCabinet.postValue(null)
             } else {
                 // Handle API error response

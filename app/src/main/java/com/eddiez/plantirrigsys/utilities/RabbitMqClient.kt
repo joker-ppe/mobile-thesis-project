@@ -8,17 +8,33 @@ import com.rabbitmq.client.ConnectionFactory
 import com.rabbitmq.client.DefaultConsumer
 import com.rabbitmq.client.Envelope
 
-class RabbitMqClient {
+class RabbitMqClient private constructor() {
     private val host = "54.169.246.109"
     private val username = "android"
     private val password = "android123@"
 
     private var connection: Connection? = null
     private var channel: Channel? = null
+    private val consumerTags = mutableMapOf<String, String>()
 
+    companion object {
+        @Volatile
+        private var instance: RabbitMqClient? = null
 
-    suspend fun connect() {
+        fun getInstance(): RabbitMqClient {
+            return instance ?: synchronized(this) {
+                instance ?: RabbitMqClient().also { instance = it }
+            }
+        }
+    }
+
+    fun connect() {
         try {
+            if (connection?.isOpen == true) {
+                Log.d("RabbitMqClient", "Already connected to RabbitMQ")
+                return
+            }
+
             val factory = ConnectionFactory()
             factory.host = host
             factory.username = username
@@ -35,7 +51,6 @@ class RabbitMqClient {
                     Log.d("RabbitMqClient", "Failed to create channel")
                 }
             } else {
-                // Handle connection error
                 Log.d("RabbitMqClient", "Failed to connect to RabbitMQ")
             }
         } catch (e: Exception) {
@@ -43,15 +58,13 @@ class RabbitMqClient {
         }
     }
 
-     fun sendMessage(exchangeName: String, message: String) {
+    fun sendMessage(exchangeName: String, message: String) {
         if (channel?.isOpen == false) {
             Log.d("RabbitMqClient", "Channel is closed")
             return
         }
         try {
-            // Declare an exchange
             channel?.exchangeDeclare(exchangeName, "fanout", false, true, null)
-            // Publish a message to the exchange
             channel?.basicPublish(exchangeName, "", null, message.toByteArray())
             Log.d("RabbitMqClient", "Message published to exchange '$exchangeName'")
         } catch (e: Exception) {
@@ -65,15 +78,10 @@ class RabbitMqClient {
             return
         }
         try {
-            // Declare an exchange
             channel?.exchangeDeclare(exchangeName, "fanout", false, true, null)
-            // Declare a queue
             channel?.queueDeclare(queueName, false, false, true, null)
-
-            // Bind the queue to the exchange
             channel?.queueBind(queueName, exchangeName, "")
 
-            // Create a consumer
             val consumer = object : DefaultConsumer(channel) {
                 override fun handleDelivery(
                     consumerTag: String,
@@ -83,32 +91,48 @@ class RabbitMqClient {
                 ) {
                     val message = String(body, charset("UTF-8"))
                     listener.onMessageReceived(message)
-//                    Log.d("RabbitMqClient", "Received message: '$message'")
                 }
             }
 
-            // Start consuming messages
-            channel?.basicConsume(queueName, true, consumer)
-            Log.d(
-                "RabbitMqClient",
-                "Started consuming messages from exchange '$exchangeName' queue '$queueName'"
-            )
+            val tag = channel?.basicConsume(queueName, true, consumer)
+            tag?.let { consumerTags[queueName] = it }
+            Log.d("RabbitMqClient", "Started consuming messages from exchange '$exchangeName' queue '$queueName'")
+        } catch (e: Exception) {
+            Log.e("RabbitMqClient", "Failed to consume messages from exchange '$exchangeName' queue $queueName", e)
+        }
+    }
 
-            // Keep the connection open until the application finishes
-            while (true) {
+    fun stopConsumingAll() {
+        try {
+            consumerTags.forEach { (_, tag) ->
+                channel?.basicCancel(tag)
+                Log.d("RabbitMqClient", "Stopped consuming messages for tag $tag")
+            }
+            consumerTags.clear()
+        } catch (e: Exception) {
+            Log.e("RabbitMqClient", "Failed to stop consuming messages", e)
+        }
+    }
+
+    fun stopConsuming(queueName: String) {
+        try {
+            consumerTags[queueName]?.let {
+                channel?.basicCancel(it)
+                consumerTags.remove(queueName)
+                Log.d("RabbitMqClient", "Stopped consuming messages for queue $queueName")
             }
         } catch (e: Exception) {
-            Log.e(
-                "RabbitMqClient",
-                "Failed to consume messages from exchange '$exchangeName' queue $queueName",
-                e
-            )
+            Log.e("RabbitMqClient", "Failed to stop consuming messages for queue $queueName", e)
         }
     }
 
     fun close() {
-        channel?.close()
-        connection?.close()
-        Log.d("RabbitMqClient", "Closed connection and channel")
+        try {
+            channel?.close()
+            connection?.close()
+            Log.d("RabbitMqClient", "Closed connection and channel")
+        } catch (e: Exception) {
+            Log.e("RabbitMqClient", "Failed to close connection and channel", e)
+        }
     }
 }

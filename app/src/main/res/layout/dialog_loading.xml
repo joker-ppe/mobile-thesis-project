@@ -22,7 +22,7 @@
         android:id="@+id/loading_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Waiting response from cabinet ..."
+        android:text="Đợi phản hồi từ tủ ..."
         android:layout_marginTop="@dimen/_10sdp"
         android:textSize="@dimen/_12ssp"
         android:textColor="@color/black"

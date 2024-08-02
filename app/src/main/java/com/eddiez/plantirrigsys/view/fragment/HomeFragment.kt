@@ -48,6 +48,7 @@ class HomeFragment : BaseFragment() {
     private var scheduleId = -1
     private var dayIndex = -1
     private var slotIndex = -1
+    private var slotsPerDay = 0
 
     private var uuidAction = ""
 
@@ -564,11 +565,14 @@ class HomeFragment : BaseFragment() {
                 try {
                     val messageData = gson.fromJson(it, MessageDataModel::class.java)
 
+//                    println(messageData)
+
                     // save data
                     userId = messageData.userId!!
                     scheduleId = messageData.scheduleId!!
                     dayIndex = messageData.dayIndex!!
                     slotIndex = messageData.slotIndex!!
+                    slotsPerDay = messageData.slotsPerDay!!
 
                     // calculate percent
                     val percentCompleteDays = Math.round(
@@ -611,6 +615,9 @@ class HomeFragment : BaseFragment() {
 
                         isWatering = true
                     } else {
+
+//                        if (slotIndex == )
+
                         binding.tvStatus.text =
                             "Lượt tiếp theo:\n${messageData.startTime} - ${messageData.day}"
 
